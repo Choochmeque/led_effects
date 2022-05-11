@@ -1,6 +1,8 @@
 import esphome.config_validation as cv
 import esphome.codegen as cg
 
+AUTO_LOAD = true
+
 CONF_MY_REQUIRED_KEY = 'my_required_key'
 CONF_MY_OPTIONAL_KEY = 'my_optional_key'
 

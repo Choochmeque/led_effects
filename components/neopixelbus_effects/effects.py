@@ -36,7 +36,7 @@ def register_addressable_effect(
 
 
 @register_addressable_effect(
-    CONF_ADDRESSABLE_MATRIX,
+    "addressable_matrix",
     AddressableMatrixEffect,
     "Matrix",
     {

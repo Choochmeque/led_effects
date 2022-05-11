@@ -13,7 +13,7 @@ static byte HEIGHT = 16;
 
 light::ESPHSVColor RgbToHsv(byte r, byte g, byte b)
 {
-    ESPHSVColor hsv;
+    light::ESPHSVColor hsv;
 
     const byte rgbMin = std::min(std::min(r, g), b);
     const byte rgbMax = std::max(std::max(r, g), b);
@@ -44,7 +44,7 @@ light::ESPHSVColor RgbToHsv(byte r, byte g, byte b)
     return hsv;
 }
 
-ESPHSVColor RgbToHsv(const Color &color)
+light::ESPHSVColor RgbToHsv(const Color &color)
 {
     return RgbToHsv(color.red, color.green, color.blue);
 }
@@ -94,7 +94,7 @@ public:
     void apply(light::AddressableLight &it, const Color &current_color) override 
     {
         const uint32_t now = millis();
-        if (now - this->last_color_change_ < this->update_interval_) {
+        if (now - this->last_run_ < this->update_interval_) {
             return;
         }
 
@@ -106,7 +106,7 @@ public:
             // заполняем случайно верхнюю строку
             const Color thisColor = it[led_num].get();
             if (isEqualColors(thisColor, Color::BLACK))
-                it[led_num] = (random(0, 25) == 0) ? RgbToHsv(0, 255, 0) : ESPHSVColor(0, 0, 0);
+                it[led_num] = (random(0, 25) == 0) ? RgbToHsv(0, 255, 0) : light::ESPHSVColor(0, 0, 0);
             else if (compareColors(thisColor, Color(0x002000)) < 0)
                 it[led_num] = Color::BLACK;
             else

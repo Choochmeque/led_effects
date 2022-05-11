@@ -7,11 +7,11 @@
 namespace esphome {
 namespace effects {
 
-class EffectsManager : public public esphome::Component 
+class EffectsManager : public esphome::Component 
 {
 public:
-    AddressableSnowEffect() {}
-    ~AddressableSnowEffect() {}
+    EffectsManager() {}
+    ~EffectsManager() {}
 
     void set_width(uint8_t width) { this->width_ = width; }
     void set_height(uint8_t height) { this->height_ = height; }

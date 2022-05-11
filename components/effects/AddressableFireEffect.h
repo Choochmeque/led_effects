@@ -30,8 +30,6 @@ const unsigned char hueMask[8][16] PROGMEM = {
     {0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 }
 };
 
-uint8_t matrixValue[8][16] = {};
-
 class AddressableFireEffect : public AddressableAbstractEffect 
 {
 public:
@@ -151,6 +149,7 @@ protected:
     bool first_run_{true};
     bool sparkles_{true};
 
+    uint8_t matrixValue[8][16] = {};
     std::vector<uint8_t> line;
     uint8_t pcnt = 0;
 };

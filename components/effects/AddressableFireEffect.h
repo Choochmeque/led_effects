@@ -31,8 +31,6 @@ const unsigned char hueMask[8][16] PROGMEM = {
 };
 
 uint8_t matrixValue[8][16] = {};
-uint8_t line[WIDTH] = {};
-uint8_t pcnt = 0;
 
 class AddressableFireEffect : public AddressableAbstractEffect 
 {
@@ -141,13 +139,16 @@ public:
                     255,           // S
                     (uint8_t)(((100.0 - pcnt) * matrixValue[0][x] + pcnt * line[x]) / 100.0) // V
                     );
-            it[getPixelNumber(x, y)] = color;
+            it[getPixelNumber(x, 0)] = color;
         }
     }
 
 protected:
     bool first_run_{true};
     bool sparkles_{true};
+
+    uint8_t line[WIDTH] = {};
+    uint8_t pcnt = 0;
 };
 
 }  // namespace effects

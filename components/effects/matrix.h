@@ -1,6 +1,7 @@
 #pragma once
 
 #include "esphome/core/component.h"
+#include "esphome/components/light/esp_hsv_color.h"
 #include "esphome/components/light/addressable_light_effect.h"
 
 namespace esphome {
@@ -10,7 +11,7 @@ static byte MATRIX_TYPE = 0;
 static byte WIDTH = 16;
 static byte HEIGHT = 16;
 
-ESPHSVColor RgbToHsv(byte r, byte g, byte b)
+light::ESPHSVColor RgbToHsv(byte r, byte g, byte b)
 {
     ESPHSVColor hsv;
 
@@ -90,7 +91,7 @@ class MatrixEffect : public light::AddressableLightEffect
 public:
     MatrixEffect(const std::string &name) : AddressableLightEffect(name) {}
 
-    void apply(AddressableLight &it, const Color &current_color) override 
+    void apply(light::AddressableLight &it, const Color &current_color) override 
     {
         const uint32_t now = millis();
         if (now - this->last_color_change_ < this->update_interval_) {
@@ -104,7 +105,7 @@ public:
             
             // заполняем случайно верхнюю строку
             const Color thisColor = it[led_num].get();
-            if (equalColors(thisColor, Color::BLACK))
+            if (isEqualColors(thisColor, Color::BLACK))
                 it[led_num] = (random(0, 25) == 0) ? RgbToHsv(0, 255, 0) : ESPHSVColor(0, 0, 0);
             else if (compareColors(thisColor, Color(0x002000)) < 0)
                 it[led_num] = Color::BLACK;

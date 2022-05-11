@@ -122,6 +122,8 @@ public:
         it.schedule_show();
     }
 
+    void set_update_interval(uint32_t update_interval) { this->update_interval_ = update_interval; }
+
 protected:
     uint32_t last_run_{0};
     uint32_t update_interval_;

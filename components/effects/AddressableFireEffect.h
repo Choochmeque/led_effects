@@ -147,7 +147,7 @@ protected:
     bool first_run_{true};
     bool sparkles_{true};
 
-    uint8_t line[16] = {};
+    std::unique_ptr<uint8_t> line; //[16] = {};
     uint8_t pcnt = 0;
 };
 

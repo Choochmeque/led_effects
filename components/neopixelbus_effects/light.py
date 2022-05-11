@@ -254,7 +254,7 @@ async def to_code(config):
         ): cv.positive_time_period_milliseconds,
     },
 )
-async def adalight_light_effect_to_code(config, effect_id):
+async def addressable_matrix_effect_to_code(config, effect_id):
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
     return var

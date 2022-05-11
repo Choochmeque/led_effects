@@ -4,19 +4,19 @@ from esphome.components import light, output
 from esphome.const import CONF_OUTPUT_ID, CONF_OUTPUT
 
 
-neopixelbus_ns = cg.esphome_ns.namespace("neopixelbus_effects")
-NeoPixelBusLightOutputBase = neopixelbus_ns.class_(
+neopixelbus_e_ns = cg.esphome_ns.namespace("neopixelbus_effects")
+NeoPixelBusELightOutputBase = neopixelbus_e_ns.class_(
     "NeoPixelBusLightOutputBase", light.AddressableLight
 )
-NeoPixelRGBLightOutput = neopixelbus_ns.class_(
-    "NeoPixelRGBLightOutput", NeoPixelBusLightOutputBase
+NeoPixelRGBELightOutput = neopixelbus_e_ns.class_(
+    "NeoPixelRGBLightOutput", NeoPixelBusELightOutputBase
 )
-NeoPixelRGBWLightOutput = neopixelbus_ns.class_(
-    "NeoPixelRGBWLightOutput", NeoPixelBusLightOutputBase
+NeoPixelRGBWELightOutput = neopixelbus_e_ns.class_(
+    "NeoPixelRGBWLightOutput", NeoPixelBusELightOutputBase
 )
 
 CONFIG_SCHEMA = light.BRIGHTNESS_ONLY_LIGHT_SCHEMA.extend({
-    cv.GenerateID(CONF_OUTPUT_ID): cv.declare_id(NeoPixelBusLightOutputBase)
+    cv.GenerateID(CONF_OUTPUT_ID): cv.declare_id(NeoPixelBusELightOutputBase)
 })
 
 def to_code(config):

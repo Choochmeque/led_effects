@@ -124,6 +124,7 @@ public:
 
 protected:
     uint32_t last_run_{0};
+    uint32_t update_interval_;
 };
 
 }  // namespace effects

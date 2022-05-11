@@ -20,8 +20,8 @@ public:
 
         this->last_run_ = now;
 
-        for (uint8_t x = 0; x < WIDTH; x++) {
-            const int led_num = getPixelNumber(x, HEIGHT - 1);
+        for (uint8_t x = 0; x < this->manager_->width(); x++) {
+            const int led_num = getPixelNumber(x, this->manager_->height() - 1);
             
             // заполняем случайно верхнюю строку
             const Color thisColor = it[led_num].get();
@@ -34,8 +34,8 @@ public:
         }  
 
         // сдвигаем всё вниз
-        for (uint8_t x = 0; x < WIDTH; x++) {
-            for (uint8_t y = 0; y < HEIGHT - 1; y++) {
+        for (uint8_t x = 0; x < this->manager_->width(); x++) {
+            for (uint8_t y = 0; y < this->manager_->height() - 1; y++) {
                 it[getPixelNumber(x, y)] = it[getPixelNumber(x, y + 1)].get();
             }
         }

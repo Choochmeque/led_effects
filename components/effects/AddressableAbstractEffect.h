@@ -4,6 +4,8 @@
 #include "esphome/components/light/esp_hsv_color.h"
 #include "esphome/components/light/addressable_light_effect.h"
 
+#include "EffectsManager.h"
+
 namespace esphome {
 namespace effects {
 
@@ -16,10 +18,13 @@ public:
 
     void set_scale(uint8_t scale) { this->scale_ = scale; }
 
+    void set_manager(EffectsManager *manager) { this->manager_ = manager; }
+
 protected:
     uint32_t last_run_{0};
     uint32_t update_interval_;
     uint8_t scale_;
+    EffectsManager *manager_{nullptr};
 
 protected:
     light::ESPHSVColor RgbToHsv(byte r, byte g, byte b)

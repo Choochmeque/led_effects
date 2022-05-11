@@ -14,6 +14,9 @@ AddressableMatrixEffect = effects_ns.class_(
 AddressableRainbowEffect = effects_ns.class_(
     "AddressableRainbowEffect", AddressableLightEffect
 )
+AddressableSnowEffect = effects_ns.class_(
+    "AddressableSnowEffect", AddressableLightEffect
+)
 
 CONFIG_SCHEMA = cv.All(cv.Schema({}), cv.only_with_arduino)
 
@@ -62,6 +65,21 @@ async def addressable_matrix_effect_to_code(config, effect_id):
     },
 )
 async def aaddressable_rainbow_vertical_effect_to_code(config, effect_id):
+    var = cg.new_Pvariable(effect_id, config[CONF_NAME])
+    cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    return var
+
+@register_addressable_effect(
+    "addressable_snow",
+    AddressableSnowEffect,
+    "Snow",
+    {
+        cv.Optional(
+            CONF_UPDATE_INTERVAL, default="255ms"
+        ): cv.positive_time_period_milliseconds,
+    },
+)
+async def aaddressable_snow_effect_to_code(config, effect_id):
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
     return var

@@ -1,8 +1,7 @@
 #pragma once
 
-#include "esphome/core/component.h"
-#include "esphome/components/light/esp_hsv_color.h"
-#include "esphome/components/light/addressable_light_effect.h"
+#include "AddressableAbstractEffect.h"
+
 
 namespace esphome {
 namespace effects {
@@ -86,10 +85,10 @@ uint32 getPixelNumber(byte x, byte y)
     } 
 };
 
-class AddressableMatrixEffect : public light::AddressableLightEffect 
+class AddressableMatrixEffect : public AddressableAbstractEffect 
 {
 public:
-    AddressableMatrixEffect(const std::string &name) : AddressableLightEffect(name) {}
+    AddressableMatrixEffect(const std::string &name) : AddressableAbstractEffect(name) {}
 
     void apply(light::AddressableLight &it, const Color &current_color) override 
     {
@@ -121,12 +120,6 @@ public:
         }
         it.schedule_show();
     }
-
-    void set_update_interval(uint32_t update_interval) { this->update_interval_ = update_interval; }
-
-protected:
-    uint32_t last_run_{0};
-    uint32_t update_interval_;
 };
 
 }  // namespace effects

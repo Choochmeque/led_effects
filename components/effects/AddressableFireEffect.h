@@ -33,11 +33,7 @@ const unsigned char hueMask[8][16] PROGMEM = {
 class AddressableFireEffect : public AddressableAbstractEffect 
 {
 public:
-    AddressableFireEffect(const std::string &name) 
-    : AddressableAbstractEffect(name) 
-    {
-        line.resize(WIDTH);
-    }
+    AddressableFireEffect(const std::string &name) : AddressableAbstractEffect(name) {}
 
     void apply(light::AddressableLight &it, const Color &current_color) override 
     {
@@ -50,6 +46,7 @@ public:
 
         if (this->first_run_) {
             this->first_run_ = false;
+            line.resize(this->manager_->width());
             generateLine();
         }
 
@@ -67,15 +64,15 @@ public:
 
     void generateLine()
     {
-        for (uint8_t x = 0; x < WIDTH; x++) {
+        for (uint8_t x = 0; x < this->manager_->width(); x++) {
             line[x] = static_cast<uint8_t>(random(64, 255));
         }
     }
 
     void shiftUp()
     {
-        for (uint8_t y = HEIGHT - 1; y > 0; y--) {
-            for (uint8_t x = 0; x < WIDTH; x++) {
+        for (uint8_t y = this->manager_->height() - 1; y > 0; y--) {
+            for (uint8_t x = 0; x < this->manager_->width(); x++) {
                 if (y > 7) {
                     continue;
                 }
@@ -83,7 +80,7 @@ public:
             }
         }
 
-        for (uint8_t x = 0; x < WIDTH; x++) {
+        for (uint8_t x = 0; x < this->manager_->width(); x++) {
             matrixValue[0][x] = line[x];
         }
     }
@@ -93,8 +90,8 @@ public:
         int nextv{0};
 
         //each row interpolates with the one before it
-        for (uint8_t y = HEIGHT - 1; y > 0; y--) {
-            for (uint8_t x = 0; x < WIDTH; x++) {
+        for (uint8_t y = this->manager_->height() - 1; y > 0; y--) {
+            for (uint8_t x = 0; x < this->manager_->width(); x++) {
                 if (y < 8) {
                     nextv =
                             (((100.0 - pcnt) * matrixValue[y][x]
@@ -133,7 +130,7 @@ public:
         }
 
         //first row interpolates with the "next" line
-        for (uint8_t x = 0; x < WIDTH; x++) {
+        for (uint8_t x = 0; x < this->manager_->width(); x++) {
             const uint8_t hue = this->scale_ * 2.55;
 
             const light::ESPHSVColor color = light::ESPHSVColor(

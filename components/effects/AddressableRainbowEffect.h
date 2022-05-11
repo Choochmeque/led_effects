@@ -21,8 +21,8 @@ public:
         this->last_run_ = now;
 
         this->hue_ += 2;
-        const auto jj = this->vertical_ ? HEIGHT : WIDTH;
-        const auto ii = this->vertical_ ? WIDTH : HEIGHT;
+        const auto jj = this->vertical_ ? this->manager_->height() : this->manager_->width();
+        const auto ii = this->vertical_ ? this->manager_->width() : this->manager_->height();
         for (uint8_t j = 0; j < jj; j++) {
             const light::ESPHSVColor thisColor = light::ESPHSVColor((byte)(this->hue_ + j * this->scale_), 255, 255);
             for (uint8_t i = 0; i < ii; i++) {

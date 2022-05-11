@@ -92,7 +92,7 @@ protected:
     {
         const byte THIS_X = x;
         const byte THIS_Y = y;
-        const byte _WIDTH = WIDTH;
+        const byte _WIDTH = this->manager_->width();
         
         if ((THIS_Y % 2 == 0) || MATRIX_TYPE) {               // если чётная строка
             return (THIS_Y * _WIDTH + THIS_X);
@@ -103,8 +103,6 @@ protected:
     }
 
     uint8_t MATRIX_TYPE{0};
-    uint8_t WIDTH{16};
-    uint8_t HEIGHT{16};
 };
 
 }  // namespace effects

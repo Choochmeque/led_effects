@@ -86,10 +86,10 @@ uint32 getPixelNumber(byte x, byte y)
     } 
 };
 
-class MatrixEffect : public light::AddressableLightEffect 
+class AddressableMatrixEffect : public light::AddressableLightEffect 
 {
 public:
-    MatrixEffect(const std::string &name) : AddressableLightEffect(name) {}
+    AddressableMatrixEffect(const std::string &name) : AddressableLightEffect(name) {}
 
     void apply(light::AddressableLight &it, const Color &current_color) override 
     {

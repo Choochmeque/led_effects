@@ -197,11 +197,11 @@ CONFIG_SCHEMA = cv.All(
     _validate,
 )
 
-# async def setup_light_(light_var, config):
-#     effects = await cg.build_registry_list(
-#         EFFECTS_REGISTRY, config.get(CONF_EFFECTS, [])
-#     )
-#     cg.add(light_var.add_effects(effects))
+async def setup_light_(light_var, config):
+    effects = await cg.build_registry_list(
+        EFFECTS_REGISTRY, config.get(CONF_EFFECTS, [])
+    )
+    cg.add(light_var.add_effects(effects))
 
 
 async def to_code(config):
@@ -220,7 +220,7 @@ async def to_code(config):
     var = cg.Pvariable(config[CONF_OUTPUT_ID], rhs, out_type)
     await light.register_light(var, config)
     await cg.register_component(var, config)
-    # await setup_light_(var, config)
+    await setup_light_(var, config)
 
     if CONF_PIN in config:
         cg.add(var.add_leds(config[CONF_NUM_LEDS], config[CONF_PIN]))

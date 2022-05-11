@@ -35,6 +35,12 @@ from .const import (
     ONE_WIRE_CHIPS,
 )
 
+from .effects import (
+    validate_effects,
+    ADDRESSABLE_EFFECTS,
+    EFFECTS_REGISTRY,
+)
+
 neopixelbus_ns = cg.esphome_ns.namespace("neopixelbus_effects")
 NeoPixelBusLightOutputBase = neopixelbus_ns.class_(
     "NeoPixelBusLightOutputBase", light.AddressableLight
@@ -190,6 +196,12 @@ CONFIG_SCHEMA = cv.All(
     _validate,
 )
 
+async def setup_light__(light_var, config):
+    effects = await cg.build_registry_list(
+        EFFECTS_REGISTRY, config.get(CONF_EFFECTS, [])
+    )
+    cg.add(light_var.add_effects(effects))
+    
 
 async def to_code(config):
     has_white = "W" in config[CONF_TYPE]
@@ -207,6 +219,7 @@ async def to_code(config):
     var = cg.Pvariable(config[CONF_OUTPUT_ID], rhs, out_type)
     await light.register_light(var, config)
     await cg.register_component(var, config)
+    await setup_light_(var, config)
 
     if CONF_PIN in config:
         cg.add(var.add_leds(config[CONF_NUM_LEDS], config[CONF_PIN]))

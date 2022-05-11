@@ -35,7 +35,11 @@ uint8_t matrixValue[8][16] = {};
 class AddressableFireEffect : public AddressableAbstractEffect 
 {
 public:
-    AddressableFireEffect(const std::string &name) : AddressableAbstractEffect(name) {}
+    AddressableFireEffect(const std::string &name) 
+    : AddressableAbstractEffect(name) 
+    {
+        line.resize(WIDTH);
+    }
 
     void apply(light::AddressableLight &it, const Color &current_color) override 
     {
@@ -147,7 +151,7 @@ protected:
     bool first_run_{true};
     bool sparkles_{true};
 
-    std::unique_ptr<uint8_t> line; //[16] = {};
+    std::vector<uint8_t> line;
     uint8_t pcnt = 0;
 };
 

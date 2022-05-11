@@ -90,7 +90,7 @@ public:
 
     void drawFrame(uint8_t pcnt, light::AddressableLight &it)
     {
-        int nextv;
+        int nextv{0};
 
         //each row interpolates with the one before it
         for (uint8_t y = HEIGHT - 1; y > 0; y--) {
@@ -101,7 +101,7 @@ public:
                             + pcnt * matrixValue[y - 1][x]) / 100.0)
                             - pgm_read_byte(&(valueMask[y][x]));
 
-                    uint8_t hue = this->scale_ * 2.55;
+                    const uint8_t hue = this->scale_ * 2.55;
 
                     light::ESPHSVColor color = light::ESPHSVColor(
                             hue + pgm_read_byte(&(hueMask[y][x])), // H
@@ -134,9 +134,9 @@ public:
 
         //first row interpolates with the "next" line
         for (uint8_t x = 0; x < WIDTH; x++) {
-            uint8_t hue = this->scale_ * 2.55;
+            const uint8_t hue = this->scale_ * 2.55;
 
-            light::ESPHSVColor color = light::ESPHSVColor(
+            const light::ESPHSVColor color = light::ESPHSVColor(
                     hue + pgm_read_byte(&(hueMask[0][x])), // H
                     255,           // S
                     (uint8_t)(((100.0 - pcnt) * matrixValue[0][x] + pcnt * line[x]) / 100.0) // V
@@ -144,6 +144,8 @@ public:
             it[getPixelNumber(x, 0)] = color;
         }
     }
+
+    void set_sparkles(bool sparkles) { this->sparkles_ = sparkles; }
 
 protected:
     bool first_run_{true};

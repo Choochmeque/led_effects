@@ -55,18 +55,22 @@ async def addressable_matrix_effect_to_code(config, effect_id):
     return var
 
 @register_addressable_effect(
-    "addressable_rainbow_vertical",
+    "addressable_rainbow",
     AddressableRainbowEffect,
-    "Rainbow Vertical",
+    "Rainbow",
     {
         cv.Optional(
             CONF_UPDATE_INTERVAL, default="100ms"
         ): cv.positive_time_period_milliseconds,
+        cv.Optional(
+            "vertical", default=True
+        ): cv.boolean,
     },
 )
 async def aaddressable_rainbow_vertical_effect_to_code(config, effect_id):
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    cg.add(var.set_vertical(config["vertical"]))
     return var
 
 @register_addressable_effect(
@@ -79,7 +83,7 @@ async def aaddressable_rainbow_vertical_effect_to_code(config, effect_id):
         ): cv.positive_time_period_milliseconds,
     },
 )
-async def aaddressable_snow_effect_to_code(config, effect_id):
+async def addressable_snow_effect_to_code(config, effect_id):
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
     return var

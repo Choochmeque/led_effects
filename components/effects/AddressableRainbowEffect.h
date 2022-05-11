@@ -21,18 +21,24 @@ public:
         this->last_run_ = now;
 
         this->hue_ += 2;
-        for (byte j = 0; j < HEIGHT; j++) {
+        const auto jj = this->vertical_ ? HEIGHT : WIDTH;
+        const auto ii = this->vertical_ ? WIDTH : HEIGHT;
+        for (byte j = 0; j < jj; j++) {
             const light::ESPHSVColor thisColor = light::ESPHSVColor((byte)(this->hue_ + j * 18), 255, 255);
-            for (byte i = 0; i < WIDTH; i++) {
-                it[getPixelNumber(i, j)] = thisColor;
+            for (byte i = 0; i < ii; i++) {
+                const auto pixel = this->vertical_ ? getPixelNumber(i, j) : getPixelNumber(j, i);
+                it[pixel] = thisColor;
             }
         }
 
         it.schedule_show();
     }
 
+    void set_vertical(bool vertical) { this->vertical_ = vertical; }
+
 protected:
     uint8_t hue_{0};
+    bool vertical_{true};
 };
 
 }  // namespace effects

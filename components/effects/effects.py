@@ -16,6 +16,7 @@ ADDRESSABLE_EFFECTS = []
 
 EFFECTS_REGISTRY = Registry()
 
+Wrong line for tests
 
 def register_effect(name, effect_type, default_name, schema, *extra_validators):
     schema = cv.Schema(schema).extend(

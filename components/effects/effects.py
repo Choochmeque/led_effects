@@ -1,3 +1,4 @@
+from esphome.jsonschema import jschema_extractor
 import esphome.codegen as cg
 import esphome.config_validation as cv
 
@@ -15,8 +16,6 @@ CONF_ADDRESSABLE_MATRIX = "addressable_matrix"
 ADDRESSABLE_EFFECTS = []
 
 EFFECTS_REGISTRY = Registry()
-
-Wrong line for tests
 
 def register_effect(name, effect_type, default_name, schema, *extra_validators):
     schema = cv.Schema(schema).extend(
@@ -50,3 +49,38 @@ async def addressable_matrix_effect_to_code(config, effect_id):
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
     return var
+
+def validate_effects(allowed_effects):
+    @jschema_extractor("effects")
+    def validator(value):
+        # pylint: disable=comparison-with-callable
+        if value == jschema_extractor:
+            return (allowed_effects, EFFECTS_REGISTRY)
+        value = cv.validate_registry("effect", EFFECTS_REGISTRY)(value)
+        errors = []
+        names = set()
+        for i, x in enumerate(value):
+            key = next(it for it in x.keys())
+            if key not in allowed_effects:
+                errors.append(
+                    cv.Invalid(
+                        f"The effect '{key}' is not allowed for this light type",
+                        [i],
+                    )
+                )
+                continue
+            name = x[key][CONF_NAME]
+            if name in names:
+                errors.append(
+                    cv.Invalid(
+                        f"Found the effect name '{name}' twice. All effects must have unique names",
+                        [i],
+                    )
+                )
+                continue
+            names.add(name)
+        if errors:
+            raise cv.MultipleInvalid(errors)
+        return value
+
+    return validator

@@ -1,9 +1,10 @@
 #pragma once
 
-#include <esphome/components/light/addressable_light_effect.h>
+#include "esphome/core/component.h"
+#include "esphome/components/light/addressable_light_effect.h"
 
 namespace esphome {
-namespace light {
+namespace effects {
 
 static byte MATRIX_TYPE = 0;
 static byte WIDTH = 16;
@@ -84,7 +85,7 @@ uint32 getPixelNumber(byte x, byte y)
     } 
 };
 
-class MatrixEffect : public esphome::light::AddressableLightEffect 
+class MatrixEffect : public light::AddressableLightEffect 
 {
 public:
     MatrixEffect(const std::string &name) : AddressableLightEffect(name) {}
@@ -124,5 +125,5 @@ protected:
     uint32_t last_run_{0};
 };
 
-}  // namespace light
+}  // namespace effects
 }  // namespace esphome

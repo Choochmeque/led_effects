@@ -103,7 +103,7 @@ public:
 
                     const uint8_t hue = this->scale_ * 2.55;
 
-                    light::ESPHSVColor color = light::ESPHSVColor(
+                    const light::ESPHSVColor color = light::ESPHSVColor(
                             hue + pgm_read_byte(&(hueMask[y][x])), // H
                             255, // S
                             (uint8_t)max(0, nextv) // V

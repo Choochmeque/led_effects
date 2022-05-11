@@ -69,12 +69,16 @@ async def addressable_matrix_effect_to_code(config, effect_id):
         cv.Optional(
             "vertical", default=True
         ): cv.boolean,
+        cv.Optional(
+            "scale", default="18"
+        ): cv.int_range(0, 255),
     },
 )
-async def aaddressable_rainbow_vertical_effect_to_code(config, effect_id):
+async def aaddressable_rainbow_effect_to_code(config, effect_id):
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
     cg.add(var.set_vertical(config["vertical"]))
+    cg.add(var.set_scale(config["scale"]))
     return var
 
 @register_addressable_effect(

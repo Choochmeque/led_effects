@@ -36,11 +36,11 @@ from .const import (
     ONE_WIRE_CHIPS,
 )
 
-from .effects import (
-    validate_effects,
-    ADDRESSABLE_EFFECTS,
-    EFFECTS_REGISTRY,
-)
+# from .effects import (
+#     validate_effects,
+#     ADDRESSABLE_EFFECTS,
+#     EFFECTS_REGISTRY,
+# )
 
 neopixelbus_ns = cg.esphome_ns.namespace("neopixelbus_effects")
 NeoPixelBusLightOutputBase = neopixelbus_ns.class_(

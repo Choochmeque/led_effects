@@ -31,10 +31,10 @@ public:
         }
 
         for (uint8_t i = 0; i < this->manager_->width() / 2; i++) {
-            if (isEqualColors(it[getPixelNumber(i, this->manager_->height() - 1)], Color::BLACK)
+            if (isEqualColors(it[getPixelNumber(i, this->manager_->height() - 1)].get(), Color::BLACK)
                     && (random(0, this->scale_) == 0)
-                    && isEqualColors(it[getPixelNumber(i + 1, this->manager_->height() - 1)], Color::BLACK)
-                    && isEqualColors(it[getPixelNumber(i - 1, this->manager_->height() - 1)], Color::BLACK)) {
+                    && isEqualColors(it[getPixelNumber(i + 1, this->manager_->height() - 1)].get(), Color::BLACK)
+                    && isEqualColors(it[getPixelNumber(i - 1, this->manager_->height() - 1)].get(), Color::BLACK)) {
                 const uint8_t hue = random(0, 200);
                 it[getPixelNumber(i, this->manager_->height() - 1)] = light::ESPHSVColor(hue, this->saturation_, 255);
             }
@@ -49,10 +49,10 @@ public:
 
         // уменьшаем яркость левой и верхней линии, формируем "хвосты"
         for (uint8_t i = this->manager_->height() / 2; i < this->manager_->height(); i++) {
-            myMatrix->fadePixelXY(0, i, this->tail_step_);
+            fadePixel(it, 0, i, this->tail_step_);
         }
         for (uint8_t i = 0; i < this->manager_->width() / 2; i++) {
-            myMatrix->fadePixelXY(i, this->manager_->height() - 1, this->tail_step_);
+            fadePixel(it, i, this->manager_->height() - 1, this->tail_step_);
         }
 
         it.schedule_show();

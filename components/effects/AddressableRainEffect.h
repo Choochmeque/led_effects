@@ -41,8 +41,10 @@ public:
             else {
                 // Shade pixel
                 const Color color = it[led_num].get();
-                ESP_LOGD("custom", "Colors: %d %d, %d %d, %d %d", color.r, color.red, color.g, color.green, color.b, color.blue);
-                it[led_num] = RgbToHsv(color - light::ESPHSVColor(0, 0, random(96, 128)).to_rgb());
+                ESP_LOGD("custom", "Colors1 : %d %d, %d %d, %d %d", color.r, color.red, color.g, color.green, color.b, color.blue);
+                const Color c = color - light::ESPHSVColor(0, 0, random(96, 128)).to_rgb();
+                ESP_LOGD("custom", "Colors2 : %d %d, %d %d, %d %d", c.r, c.red, c.g, c.green, c.b, c.blue);
+                it[led_num] = RgbToHsv(c);
             }
         }
         // сдвигаем всё вниз

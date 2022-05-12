@@ -12,6 +12,9 @@ effects_ns = cg.esphome_ns.namespace("effects")
 
 EffectsManagerComponent = effects_ns.class_("EffectsManager", cg.Component)
 
+AddressableColorsEffect = effects_ns.class_(
+    "AddressableColorsEffect", AddressableLightEffect
+)
 AddressableFireEffect = effects_ns.class_(
     "AddressableFireEffect", AddressableLightEffect
 )
@@ -66,6 +69,30 @@ async def to_code(config):
     await cg.register_component(var, config)
     cg.add(var.set_width(config[CONF_WIDTH]))
     cg.add(var.set_height(config[CONF_HEIGHT]))
+
+
+@register_addressable_effect(
+    "addressable_colors",
+    AddressableColorsEffect,
+    "Colors",
+    {
+        cv.GenerateID(CONF_EMNGR_ID): cv.use_id(EffectsManagerComponent),
+        cv.Optional(
+            CONF_UPDATE_INTERVAL, default="112ms"
+        ): cv.positive_time_period_milliseconds,
+        cv.Optional(
+            "scale", default="1"
+        ): cv.int_range(0, 255),
+    },
+)
+async def addressable_fire_effect_to_code(config, effect_id):
+    mngr = await cg.get_variable(config[CONF_EMNGR_ID])
+
+    var = cg.new_Pvariable(effect_id, config[CONF_NAME])
+    cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_manager(mngr))
+    return var
 
 @register_addressable_effect(
     "addressable_fire",

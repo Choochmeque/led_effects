@@ -21,6 +21,7 @@ public:
         this->last_run_ = now;
 
         if (this->first_run_) {
+            this->first_run_ = false;
             this->lightersPos_.resize(2);
             this->lightersPos_[0].resize(this->lighters_am_);
             this->lightersPos_[1].resize(this->lighters_am_);
@@ -71,13 +72,16 @@ public:
                 this->lightersPos_[1][i] = (this->manager_->height() - 1) * 10;
                 this->lightersSpeed_[1][i] = -this->lightersSpeed_[1][i];
             }
-            myMatrix->drawPixelXY(this->lightersPos_[0][i] / 10, this->lightersPos_[1][i] / 10, this->lightersColor_[i]);
+            
+            it[getPixelNumber(this->lightersPos_[0][i] / 10, this->lightersPos_[1][i] / 10)] = this->lightersColor_[i];
         }
 
         it.schedule_show();
     }
 
 protected:
+    bool first_run_{true};
+
     std::vector<std::vector<int> > lightersPos_;
     std::vector<std::vector<int8_t> > lightersSpeed_;
     std::vector<light::ESPHSVColor> lightersColor_;

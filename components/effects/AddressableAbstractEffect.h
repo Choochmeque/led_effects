@@ -102,6 +102,13 @@ protected:
         } 
     }
 
+    uint32_t colorcode(const Color &color)
+    {
+        return uint32_t{color.red} << 16 |
+            uint32_t{color.green} << 8 |
+            uint32_t{color.blue};
+    }
+
     uint8_t MATRIX_TYPE{0};
 };
 

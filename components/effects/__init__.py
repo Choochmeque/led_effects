@@ -2,7 +2,7 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components.light.types import AddressableLightEffect
 from esphome.components.light.effects import register_addressable_effect
-from esphome.const import CONF_ID, CONF_NAME, CONF_UPDATE_INTERVAL
+from esphome.const import CONF_ID, CONF_NAME, CONF_UPDATE_INTERVAL, CONF_WIDTH, CONF_HEIGHT
 
 
 CONF_EMNGR_ID = "emngr_id"
@@ -14,6 +14,9 @@ EffectsManagerComponent = effects_ns.class_("EffectsManager", cg.Component)
 
 AddressableFireEffect = effects_ns.class_(
     "AddressableFireEffect", AddressableLightEffect
+)
+AddressableLightersEffect = effects_ns.class_(
+    "AddressableLightersEffect", AddressableLightEffect
 )
 AddressableMatrixEffect = effects_ns.class_(
     "AddressableMatrixEffect", AddressableLightEffect
@@ -33,10 +36,10 @@ CONFIG_SCHEMA = cv.All(
         {
             cv.GenerateID(): cv.declare_id(EffectsManagerComponent),
             cv.Optional(
-                "width", default="16"
+                CONF_WIDTH, default="16"
             ): cv.int_range(0, 255),
             cv.Optional(
-                "height", default="16"
+                CONF_HEIGHT, default="16"
             ): cv.int_range(0, 255),
             # cv.Optional(CONF_METHOD, default="MULTICAST"): cv.one_of(
             #     *METHODS, upper=True
@@ -49,8 +52,8 @@ CONFIG_SCHEMA = cv.All(
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
-    cg.add(var.set_width(config["width"]))
-    cg.add(var.set_height(config["height"]))
+    cg.add(var.set_width(config[CONF_WIDTH]))
+    cg.add(var.set_height(config[CONF_HEIGHT]))
 
 @register_addressable_effect(
     "addressable_fire",
@@ -76,6 +79,29 @@ async def addressable_fire_effect_to_code(config, effect_id):
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
     cg.add(var.set_scale(config["scale"]))
     cg.add(var.set_sparkles(config["sparkles"]))
+    cg.add(var.set_manager(mngr))
+    return var
+
+@register_addressable_effect(
+    "addressable_lighters",
+    AddressableLightersEffect,
+    "Lighters",
+    {
+        cv.GenerateID(CONF_EMNGR_ID): cv.use_id(EffectsManagerComponent),
+        cv.Optional(
+            CONF_UPDATE_INTERVAL, default="127ms"
+        ): cv.positive_time_period_milliseconds,
+        cv.Optional(
+            "scale", default="10"
+        ): cv.int_range(0, 255),        
+    },
+)
+async def addressable_lighters_effect_to_code(config, effect_id):
+    mngr = await cg.get_variable(config[CONF_EMNGR_ID])
+
+    var = cg.new_Pvariable(effect_id, config[CONF_NAME])
+    cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    cg.add(var.set_scale(config["scale"]))
     cg.add(var.set_manager(mngr))
     return var
 

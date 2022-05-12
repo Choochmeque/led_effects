@@ -40,8 +40,8 @@ public:
             } 
             else {
                 // Shade pixel
-                //Color color = it[led_num].get();
-                //it[led_num] = RgbToHsv(color - light::ESPHSVColor(0, 0, random(96, 128)).to_rgb());
+                Color color = it[led_num].get();
+                it[led_num] = RgbToHsv(color - light::ESPHSVColor(0, 0, random(96, 128)).to_rgb());
             }
         }
         // сдвигаем всё вниз

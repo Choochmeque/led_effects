@@ -25,12 +25,15 @@ public:
             
             // заполняем случайно верхнюю строку
             const Color thisColor = it[led_num].get();
-            if (isEqualColors(thisColor, Color::BLACK))
-                it[led_num] = (random(0, 25) == 0) ? RgbToHsv(0, 255, 0) : light::ESPHSVColor(0, 0, 0);
-            else if (compareColors(thisColor, Color(0x002000)) < 0)
+            if (isEqualColors(thisColor, Color::BLACK)) {
+                it[led_num] = (random(0, this->scale_) == 0) ? RgbToHsv(0, 255, 0) : light::ESPHSVColor(0, 0, 0);
+            }
+            else if (compareColors(thisColor, Color(0x002000)) < 0) {
                 it[led_num] = Color::BLACK;
-            else
+            }
+            else {
                 it[led_num] = thisColor - Color(0x002000);
+            }
         }  
 
         // сдвигаем всё вниз

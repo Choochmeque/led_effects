@@ -30,7 +30,7 @@ public:
         for (byte x = 0; x < this->manager_->width(); x++) {
             // заполняем случайно верхнюю строку
             // а также не даём двум блокам по вертикали вместе быть
-            if (isEqualColors(it[getPixelNumber(x, this->manager_->height() - 2)].get(), Color::BLACK) && (random(0, 33) == 0)) {
+            if (isEqualColors(it[getPixelNumber(x, this->manager_->height() - 2)].get(), Color::BLACK) && (random(0, this->scale_) == 0)) {
                 const Color c = Color(224, 255, 255) - Color(0x101010 * random(0, 4));
                 it[getPixelNumber(x, this->manager_->height() - 1)] = RgbToHsv(c.red, c.green, c.blue);
             }

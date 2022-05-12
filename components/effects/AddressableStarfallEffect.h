@@ -76,7 +76,8 @@ protected:
         }
 
         if (color.red >= 30 || color.green >= 30 || color.blue >= 30) {
-            it[pixelNum] = color.fade_to_black(step);
+            color.fade_to_black(step);
+            //it[pixelNum] = color.fade_to_black(step);
         }
         else {
             it[pixelNum] = Color::BLACK;

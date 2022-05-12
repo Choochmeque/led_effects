@@ -38,14 +38,14 @@ public:
             } 
             else {
                 // Shade pixel
-                light::ESPHSVColor color = it[getPixelNumber(x, this->manager_->height() - 1)];
-                it[getPixelNumber(x, this->manager_->height() - 1)] = color - light::ESPHSVColor(0, 0, random(96, 128));
+                Color color = it[getPixelNumber(x, this->manager_->height() - 1)].get();
+                it[getPixelNumber(x, this->manager_->height() - 1)] = color - light::ESPHSVColor(0, 0, random(96, 128)).to_rgb();
             }
         }
         // сдвигаем всё вниз
         for (uint8_t x = 0; x < this->manager_->width(); x++) {
             for (uint8_t y = 0; y < this->manager_->height() - 1; y++) {
-                it[getPixelNumber(x, y)] = it[getPixelNumber(x, y + 1)];
+                it[getPixelNumber(x, y)] = it[getPixelNumber(x, y + 1)].get();
             }
         }
 

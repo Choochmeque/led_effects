@@ -25,7 +25,7 @@ public:
 
             // заполняем случайно верхнюю строку
             const Color thisColor = it[led_num].get();
-            if (!this->colorcode(thisColor)) {
+            if (isEqualColors(thisColor, Color::BLACK)) {
                 if (random(0, 50) == 0) {
                     if (this->scale_ <= 1) {
                         it[led_num] = light::ESPHSVColor(random(0, 9) * 28, 255, 255);
@@ -40,7 +40,8 @@ public:
             } 
             else {
                 // Shade pixel
-                Color color = it[led_num].get();
+                const Color color = it[led_num].get();
+                ESP_LOGD("custom", "Colors: %d %d, %d %d, %d %d", color.r, color.red, color.g, color.green, color.b, color.blue);
                 it[led_num] = RgbToHsv(color - light::ESPHSVColor(0, 0, random(96, 128)).to_rgb());
             }
         }

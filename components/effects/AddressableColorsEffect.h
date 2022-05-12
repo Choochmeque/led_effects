@@ -21,7 +21,7 @@ public:
         this->last_run_ = now;
 
         this->hue_ += this->scale_;
-        it.all() = light::ESPHSVColor(hue, 255, 255);
+        it.all() = light::ESPHSVColor(this->hue_, 255, 255);
 
         it.schedule_show();
     }

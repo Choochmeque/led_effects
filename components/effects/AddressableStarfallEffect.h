@@ -69,7 +69,7 @@ protected:
     void fadePixel(light::AddressableLight &it, uint8_t x, uint8_t y, uint8_t step)
     {
         const uint16_t pixelNum = getPixelNumber(x, y);
-        ESPColorView cv = it[pixelNum];
+        light::ESPColorView cv = it[pixelNum];
         Color color(cv.get_red_raw(), cv.get_green_raw(), cv.get_blue_raw());
 
         if (isEqualColors(color, Color::BLACK)) {

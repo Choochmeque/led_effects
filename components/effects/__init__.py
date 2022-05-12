@@ -33,6 +33,9 @@ AddressableSinusoidEffect = effects_ns.class_(
 AddressableSnowEffect = effects_ns.class_(
     "AddressableSnowEffect", AddressableLightEffect
 )
+AddressableStarfallEffect = effects_ns.class_(
+    "AddressableStarfallEffect", AddressableLightEffect
+)
 
 CONFIG_SCHEMA = cv.All(cv.Schema({}), cv.only_with_arduino)
 
@@ -219,5 +222,36 @@ async def addressable_snow_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    cg.add(var.set_manager(mngr))
+    return var
+
+@register_addressable_effect(
+    "addressable_starfall",
+    AddressableStarfallEffect,
+    "Starfall",
+    {
+        cv.GenerateID(CONF_EMNGR_ID): cv.use_id(EffectsManagerComponent),
+        cv.Optional(
+            CONF_UPDATE_INTERVAL, default="80ms"
+        ): cv.positive_time_period_milliseconds,
+        cv.Optional(
+            "scale", default="100"
+        ): cv.int_range(0, 255),
+        cv.Optional(
+            "step", default="100"
+        ): cv.int_range(0, 255),
+        cv.Optional(
+            "saturation", default="150"
+        ): cv.int_range(0, 255),
+    },
+)
+async def addressable_snow_effect_to_code(config, effect_id):
+    mngr = await cg.get_variable(config[CONF_EMNGR_ID])
+
+    var = cg.new_Pvariable(effect_id, config[CONF_NAME])
+    cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_tail_step(config["step"]))
+    cg.add(var.set_saturation(config["saturation"]))
     cg.add(var.set_manager(mngr))
     return var

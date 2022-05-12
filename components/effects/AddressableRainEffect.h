@@ -24,12 +24,12 @@ public:
             // заполняем случайно верхнюю строку
             const Color thisColor = it[getPixelNumber(x, this->manager_->height() - 1)].get();
             if (!this->colorcode(thisColor)) {
-                if (random8(0, 50) == 0) {
+                if (random(0, 50) == 0) {
                     if (this->scale_ <= 1) {
                         it[getPixelNumber(x, this->manager_->height() - 1)] = light::ESPHSVColor(random(0, 9) * 28, 255, 255);
                     } 
                     else if (this->scale_ == 100) {
-                        it[getPixelNumber(x, this->manager_->height() - 1)] = CRGB(0xE0FFFF - 0x101010 * random(0, 4));
+                        it[getPixelNumber(x, this->manager_->height() - 1)] = RgbToHsv(Color(0xE0FFFF - 0x101010 * random(0, 4)));
                     } 
                     else {
                         it[getPixelNumber(x, this->manager_->height() - 1)] = light::ESPHSVColor(this->scale_ * 2.4 + random(0, 16), 255, 255);
@@ -38,7 +38,8 @@ public:
             } 
             else {
                 // Shade pixel
-                it[getPixelNumber(x, this->manager_->height() - 1)] -= light::ESPHSVColor(0, 0, random(96, 128));
+                light::ESPHSVColor color = it[getPixelNumber(x, this->manager_->height() - 1)];
+                it[getPixelNumber(x, this->manager_->height() - 1)] = color - light::ESPHSVColor(0, 0, random(96, 128));
             }
         }
         // сдвигаем всё вниз

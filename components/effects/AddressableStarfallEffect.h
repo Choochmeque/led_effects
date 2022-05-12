@@ -69,7 +69,7 @@ protected:
     void fadePixel(light::AddressableLight &it, uint8_t x, uint8_t y, uint8_t step)
     {
         const uint16_t pixelNum = getPixelNumber(x, y);
-        const Color color = it[pixelNum].get();
+        Color color = it[pixelNum].get();
 
         if (isEqualColors(color, Color::BLACK)) {
             return;

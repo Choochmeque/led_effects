@@ -49,7 +49,7 @@ AddressableWhiteColorEffect = effects_ns.class_(
     "AddressableWhiteColorEffect", AddressableLightEffect
 )
 
-RAINBOW_TYPES = {"horizontal": AddressableRainbowEffect.Horizontal, "vertical": AddressableRainbowEffect.Vertical, "diagonal": AddressableRainbowEffect.Diagonal, "twirl": AddressableRainbowEffect.Twirl}
+RAINBOW_TYPES = {"horizontal": effects_ns.Horizontal, "vertical": effects_ns.Vertical, "diagonal": effects_ns.Diagonal, "twirl": effects_ns.Twirl}
 
 CONFIG_SCHEMA = cv.All(cv.Schema({}), cv.only_with_arduino)
 

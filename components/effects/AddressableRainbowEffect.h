@@ -6,16 +6,18 @@
 namespace esphome {
 namespace effects {
 
+enum RainbowType
+{
+    Horizontal = 0,
+    Vertical,
+    Diagonal,
+    Twirl
+};
+
 class AddressableRainbowEffect : public AddressableAbstractEffect 
 {
 public:
-    enum RainbowType
-    {
-        Horizontal = 0,
-        Vertical,
-        Diagonal,
-        Twirl
-    };
+
 
     AddressableRainbowEffect(const std::string &name) : AddressableAbstractEffect(name) {}
 

@@ -270,7 +270,7 @@ async def aaddressable_rainbow_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_method(RAINBOW_TYPES[config["type"]]))
+    cg.add(var.set_rainbow_type(RAINBOW_TYPES[config["type"]]))
     cg.add(var.set_scale(config["scale"]))
     cg.add(var.set_manager(mngr))
     return var

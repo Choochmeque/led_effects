@@ -11,6 +11,35 @@ class AddressableBouncingBallsEffect : public AddressableAbstractEffect
 public:
     AddressableBouncingBallsEffect(const std::string &name) : AddressableAbstractEffect(name) {}
 
+    void start() override
+    {
+        bballsMaxNUM = this->manager_->width() * 2;
+        bballsVImpact0 = sqrt(2 * bballsGRAVITY * bballsH0);
+
+        bballsCOLOR.resize(bballsMaxNUM);
+        bballsX.resize(bballsMaxNUM);
+        bballsShift.resize(bballsMaxNUM);
+
+        bballsVImpact.resize(bballsMaxNUM);
+        bballsPos.resize(bballsMaxNUM);
+        bballsTLast.resize(bballsMaxNUM);
+        bballsCOR.resize(bballsMaxNUM);
+
+        bballsNUM = (this->scale_ - 1) / 99.0f * (bballsMaxNUM - 1) + 1;
+        if (bballsNUM > bballsMaxNUM) {
+            bballsNUM = bballsMaxNUM;
+        }
+        for (int i = 0 ; i < bballsNUM ; i++) {
+            bballsCOLOR[i] = random(0, 255);
+            bballsX[i] = random(0, this->manager_->width());
+            bballsTLast[i] = millis();
+            bballsPos[i] = 0;
+            bballsVImpact[i] = bballsVImpact0;
+            bballsCOR[i] = 0.90f - float(i) / pow(bballsNUM, 2);
+            bballsShift[i] = false;
+        }
+    }
+
     void apply(light::AddressableLight &it, const Color &current_color) override 
     {
         const uint32_t now = millis();
@@ -19,36 +48,6 @@ public:
         }
 
         this->last_run_ = now;
-
-        if (this->first_run_) {
-            this->first_run_ = false;
-            
-            bballsMaxNUM = this->manager_->width() * 2;
-            bballsVImpact0 = sqrt(2 * bballsGRAVITY * bballsH0);
-
-            bballsCOLOR.resize(bballsMaxNUM);
-            bballsX.resize(bballsMaxNUM);
-            bballsShift.resize(bballsMaxNUM);
-
-            bballsVImpact.resize(bballsMaxNUM);
-            bballsPos.resize(bballsMaxNUM);
-            bballsTLast.resize(bballsMaxNUM);
-            bballsCOR.resize(bballsMaxNUM);
-
-            bballsNUM = (this->scale_ - 1) / 99.0f * (bballsMaxNUM - 1) + 1;
-            if (bballsNUM > bballsMaxNUM) {
-                bballsNUM = bballsMaxNUM;
-            }
-            for (int i = 0 ; i < bballsNUM ; i++) {
-                bballsCOLOR[i] = random(0, 255);
-                bballsX[i] = random(0, this->manager_->width());
-                bballsTLast[i] = millis();
-                bballsPos[i] = 0;
-                bballsVImpact[i] = bballsVImpact0;
-                bballsCOR[i] = 0.90f - float(i) / pow(bballsNUM, 2);
-                bballsShift[i] = false;
-            }
-        }
 
         float bballsHi = 0;
         float bballsTCycle = 0;
@@ -97,7 +96,6 @@ public:
     void set_colored(bool colored) { this->colored_ = colored; }
 
 protected:
-    bool first_run_{true};
     bool colored_{false};
 
     const float bballsGRAVITY{9.81f};

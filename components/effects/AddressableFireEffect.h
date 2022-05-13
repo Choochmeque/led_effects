@@ -35,6 +35,12 @@ class AddressableFireEffect : public AddressableAbstractEffect
 public:
     AddressableFireEffect(const std::string &name) : AddressableAbstractEffect(name) {}
 
+    void start() override
+    {
+        this->line_.resize(this->manager_->width());
+        generateLine();
+    }
+
     void apply(light::AddressableLight &it, const Color &current_color) override 
     {
         const uint32_t now = millis();
@@ -44,20 +50,14 @@ public:
 
         this->last_run_ = now;
 
-        if (this->first_run_) {
-            this->first_run_ = false;
-            line.resize(this->manager_->width());
-            generateLine();
-        }
-
-        if (pcnt >= 100) {
+        if (this->pcnt_ >= 100) {
             shiftUp();
             generateLine();
-            pcnt = 0;
+            this->pcnt_ = 0;
         }
 
-        drawFrame(pcnt, it);
-        pcnt += 30;
+        drawFrame(it);
+        this->pcnt_ += 30;
 
         it.schedule_show();
     }
@@ -65,7 +65,7 @@ public:
     void generateLine()
     {
         for (uint8_t x = 0; x < this->manager_->width(); x++) {
-            line[x] = static_cast<uint8_t>(random(64, 255));
+            this->line_[x] = static_cast<uint8_t>(random(64, 255));
         }
     }
 
@@ -81,11 +81,11 @@ public:
         }
 
         for (uint8_t x = 0; x < this->manager_->width(); x++) {
-            matrixValue[0][x] = line[x];
+            matrixValue[0][x] = this->line_[x];
         }
     }
 
-    void drawFrame(uint8_t pcnt, light::AddressableLight &it)
+    void drawFrame(light::AddressableLight &it)
     {
         int nextv{0};
 
@@ -94,8 +94,8 @@ public:
             for (uint8_t x = 0; x < this->manager_->width(); x++) {
                 if (y < 8) {
                     nextv =
-                            (((100.0 - pcnt) * matrixValue[y][x]
-                            + pcnt * matrixValue[y - 1][x]) / 100.0)
+                            (((100.0 - this->pcnt_) * matrixValue[y][x]
+                            + this->pcnt_ * matrixValue[y - 1][x]) / 100.0)
                             - pgm_read_byte(&(valueMask[y][x]));
 
                     const uint8_t hue = this->scale_ * 2.55;
@@ -136,7 +136,7 @@ public:
             const light::ESPHSVColor color = light::ESPHSVColor(
                     hue + pgm_read_byte(&(hueMask[0][x])), // H
                     255,           // S
-                    (uint8_t)(((100.0 - pcnt) * matrixValue[0][x] + pcnt * line[x]) / 100.0) // V
+                    (uint8_t)(((100.0 - this->pcnt_) * matrixValue[0][x] + this->pcnt_ * this->line_[x]) / 100.0) // V
                     );
             it[getPixelNumber(x, 0)] = color;
         }
@@ -145,12 +145,11 @@ public:
     void set_sparkles(bool sparkles) { this->sparkles_ = sparkles; }
 
 protected:
-    bool first_run_{true};
     bool sparkles_{true};
 
     uint8_t matrixValue[8][16] = {};
-    std::vector<uint8_t> line;
-    uint8_t pcnt = 0;
+    std::vector<uint8_t> line_;
+    uint8_t pcnt_{0};
 };
 
 }  // namespace effects

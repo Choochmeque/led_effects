@@ -49,6 +49,8 @@ AddressableWhiteColorEffect = effects_ns.class_(
     "AddressableWhiteColorEffect", AddressableLightEffect
 )
 
+RAINBOW_TYPES = {"horizontal": AddressableRainbowEffect.Horizontal, "vertical": AddressableRainbowEffect.Vertical, "diagonal": AddressableRainbowEffect.Diagonal, "twirl": AddressableRainbowEffect.Twirl}
+
 CONFIG_SCHEMA = cv.All(cv.Schema({}), cv.only_with_arduino)
 
 # TODO: add effects manager component with width, height and matrix type properties
@@ -62,9 +64,6 @@ CONFIG_SCHEMA = cv.All(
             cv.Optional(
                 CONF_HEIGHT, default="16"
             ): cv.int_range(0, 255),
-            # cv.Optional(CONF_METHOD, default="MULTICAST"): cv.one_of(
-            #     *METHODS, upper=True
-            # ),
         }
     ),
     cv.only_with_arduino,
@@ -259,11 +258,11 @@ async def addressable_rain_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="100ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "vertical", default=True
-        ): cv.boolean,
-        cv.Optional(
             "scale", default="18"
         ): cv.int_range(0, 255),
+        cv.Optional("type", default="Horizontal"): cv.one_of(
+            *RAINBOW_TYPES, upper=False
+        ),
     },
 )
 async def aaddressable_rainbow_effect_to_code(config, effect_id):
@@ -271,7 +270,7 @@ async def aaddressable_rainbow_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_vertical(config["vertical"]))
+    cg.add(var.set_method(RAINBOW_TYPES[config["type"]]))
     cg.add(var.set_scale(config["scale"]))
     cg.add(var.set_manager(mngr))
     return var

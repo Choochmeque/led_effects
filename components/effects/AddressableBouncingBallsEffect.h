@@ -26,14 +26,14 @@ public:
             bballsMaxNUM = this->manager_->width() * 2;
             bballsVImpact0 = sqrt(2 * bballsGRAVITY * bballsH0);
 
-            bballsCOLOR.reszie(bballsMaxNUM);
-            bballsX.reszie(bballsMaxNUM);
-            bballsShift.reszie(bballsMaxNUM);
+            bballsCOLOR.resize(bballsMaxNUM);
+            bballsX.resize(bballsMaxNUM);
+            bballsShift.resize(bballsMaxNUM);
 
-            bballsVImpact.reszie(bballsMaxNUM);
-            bballsPos.reszie(bballsMaxNUM);
-            bballsTLast.reszie(bballsMaxNUM);
-            bballsCOR.reszie(bballsMaxNUM);
+            bballsVImpact.resize(bballsMaxNUM);
+            bballsPos.resize(bballsMaxNUM);
+            bballsTLast.resize(bballsMaxNUM);
+            bballsCOR.resize(bballsMaxNUM);
 
             bballsNUM = (this->scale_ - 1) / 99.0f * (bballsMaxNUM - 1) + 1;
             if (bballsNUM > bballsMaxNUM) {
@@ -88,7 +88,7 @@ public:
                     }
                 }
             }
-            it[getPixelNumber(bballsX[i], bballsPos[i])] = light::ESPHSVColor(bballsCOLOR[i], (this->colored_) ? 255 : 0, 255));
+            it[getPixelNumber(bballsX[i], bballsPos[i])] = light::ESPHSVColor(bballsCOLOR[i], (this->colored_) ? 255 : 0, 255);
         }
 
         it.schedule_show();

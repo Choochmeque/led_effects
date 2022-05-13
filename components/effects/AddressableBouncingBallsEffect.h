@@ -54,7 +54,7 @@ public:
         float bballsTCycle = 0;
 
         // Dim all
-        it.all() *= 255 - this->update_interval_;
+        it.all().fade_to_black(255 - this->update_interval_);
 
         for (int i = 0 ; i < bballsNUM ; i++) {
             bballsTCycle =  millis() - bballsTLast[i];
@@ -103,7 +103,7 @@ protected:
     const float bballsGRAVITY{9.81f};
     const uint8_t bballsH0{1};
     uint8_t bballsMaxNUM{0};
-    const uint8_t bballsNUM{0};
+    uint8_t bballsNUM{0};
 
     float bballsVImpact0{0.0f};
 

@@ -83,7 +83,7 @@ async def to_code(config):
             CONF_UPDATE_INTERVAL, default="100ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="0"
+            "scale", default="20"
         ): cv.int_range(0, 255),
         cv.Optional(
             "colored", default=False

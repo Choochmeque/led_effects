@@ -27,6 +27,9 @@ AddressableLightersEffect = effects_ns.class_(
 AddressableMatrixEffect = effects_ns.class_(
     "AddressableMatrixEffect", AddressableLightEffect
 )
+AddressableMovingCubeEffect = effects_ns.class_(
+    "AddressableMovingCubeEffect", AddressableLightEffect
+)
 AddressableRainEffect = effects_ns.class_(
     "AddressableRainEffect", AddressableLightEffect
 )
@@ -193,6 +196,33 @@ async def addressable_matrix_effect_to_code(config, effect_id):
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
     cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_manager(mngr))
+    return var
+
+@register_addressable_effect(
+    "addressable_moving_cube",
+    AddressableMovingCubeEffect,
+    "Moving Cube",
+    {
+        cv.GenerateID(CONF_EMNGR_ID): cv.use_id(EffectsManagerComponent),
+        cv.Optional(
+            CONF_UPDATE_INTERVAL, default="100ms"
+        ): cv.positive_time_period_milliseconds,
+        cv.Optional(
+            "scale", default="20"
+        ): cv.int_range(0, 255),
+        cv.Optional(
+            "random", default=True
+        ): cv.boolean,
+    },
+)
+async def addressable_moving_cube_effect_to_code(config, effect_id):
+    mngr = await cg.get_variable(config[CONF_EMNGR_ID])
+
+    var = cg.new_Pvariable(effect_id, config[CONF_NAME])
+    cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_random_color(config["random"]))
     cg.add(var.set_manager(mngr))
     return var
 

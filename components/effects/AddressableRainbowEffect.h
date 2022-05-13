@@ -21,6 +21,14 @@ public:
 
     AddressableRainbowEffect(const std::string &name) : AddressableAbstractEffect(name) {}
 
+    void start() override
+    {
+        if (this->rainbow_type_ == RainbowType::Twirl) {
+            this->max_dimension_ = max(this->manager_->width(), this->manager_->height());
+            this->ratio_ = static_cast<float>(this->manager_->width()) / this->manager_->height();
+        }
+    }
+
     void apply(light::AddressableLight &it, const Color &current_color) override 
     {
         const uint32_t now = millis();
@@ -30,14 +38,7 @@ public:
 
         this->last_run_ = now;
 
-        if (this->first_run_) {
-            this->first_run_ = false;
-
-            maxDimension = max(this->manager_->width(), this->manager_->height());
-            ratio = static_cast<float>(this->manager_->width()) / this->manager_->height();
-        }
-
-        if (this->rainbow_type_ == Horizontal) {
+        if (this->rainbow_type_ == RainbowType::Horizontal) {
             this->hue_ += 2;
             for (uint8_t x = 0; x < this->manager_->width(); x++) {
                 const light::ESPHSVColor thisColor = light::ESPHSVColor((byte)(this->hue_ + x * this->scale_), 255, 255);
@@ -46,7 +47,7 @@ public:
                 }
             }
         }
-        else if (this->rainbow_type_ == Vertical) {
+        else if (this->rainbow_type_ == RainbowType::Vertical) {
             this->hue_ += 2;
             for (uint8_t y = 0; y < this->manager_->height(); y++) {
                 const light::ESPHSVColor thisColor = light::ESPHSVColor((byte)(this->hue_ + y * this->scale_), 255, 255);
@@ -55,7 +56,7 @@ public:
                 }
             }
         }
-        else if (this->rainbow_type_ == Diagonal) {
+        else if (this->rainbow_type_ == RainbowType::Diagonal) {
             this->hue_ += 2;
             for (uint8_t x = 0; x < this->manager_->width(); x++) {
                 const light::ESPHSVColor thisColor = light::ESPHSVColor((this->hue_ + x * this->scale_), 255, 255);
@@ -64,12 +65,12 @@ public:
                 }
             }
         }
-        else if (this->rainbow_type_ == Twirl) {
+        else if (this->rainbow_type_ == RainbowType::Twirl) {
             this->hue_ += hueStep;
             float factor = (twirlFactor / 100.0f) * (this->scale_ / 100.0f);
             for (uint8_t x = 0; x < this->manager_->width(); x++) {
                 for (uint8_t y = 0; y < this->manager_->height(); y++) {
-                    light::ESPHSVColor thisColor = light::ESPHSVColor(static_cast<uint8_t>(hue + (ratio * x + y * factor) * (255.0f / maxDimension)), 255, 255);
+                    light::ESPHSVColor thisColor = light::ESPHSVColor(static_cast<uint8_t>(hue + (this->ratio_ * x + y * factor) * (255.0f / this->max_dimension_)), 255, 255);
                     it[getPixelNumber(x, y)] = thisColor;
                 }
             }
@@ -81,16 +82,15 @@ public:
     void set_rainbow_type(RainbowType rainbow_type) { this->rainbow_type_ = rainbow_type; }
 
 protected:
-    bool first_run_{true};
     uint8_t hue_{0};
-    RainbowType rainbow_type_{Horizontal};
+    RainbowType rainbow_type_{RainbowType::Horizontal};
 
     uint8_t hue{0};
     uint8_t hueStep{8};
     uint16_t twirlFactor{300};
 
-    uint8_t maxDimension{0};
-    float ratio{0.0f};
+    uint8_t max_dimension_{0};
+    float ratio_{0.0f};
 };
 
 }  // namespace effects

@@ -24,7 +24,7 @@ public:
             this->first_run_ = false;
             
             coordB.resize(2);;
-            vectorB.reszie(2);
+            vectorB.resize(2);
 
             for (uint8_t i = 0; i < 2; i++) {
                 coordB[i] = this->manager_->width() / 2 * 10;

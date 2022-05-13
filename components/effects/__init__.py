@@ -12,6 +12,9 @@ effects_ns = cg.esphome_ns.namespace("effects")
 
 EffectsManagerComponent = effects_ns.class_("EffectsManager", cg.Component)
 
+AddressableBouncingBallsEffect = effects_ns.class_(
+    "AddressableBouncingBallsEffect", AddressableLightEffect
+)
 AddressableColorsEffect = effects_ns.class_(
     "AddressableColorsEffect", AddressableLightEffect
 )
@@ -70,6 +73,32 @@ async def to_code(config):
     cg.add(var.set_width(config[CONF_WIDTH]))
     cg.add(var.set_height(config[CONF_HEIGHT]))
 
+@register_addressable_effect(
+    "addressable_bouncing_balls",
+    AddressableBouncingBallsEffect,
+    "Bouncing Balls",
+    {
+        cv.GenerateID(CONF_EMNGR_ID): cv.use_id(EffectsManagerComponent),
+        cv.Optional(
+            CONF_UPDATE_INTERVAL, default="100ms"
+        ): cv.positive_time_period_milliseconds,
+        cv.Optional(
+            "scale", default="0"
+        ): cv.int_range(0, 255),
+        cv.Optional(
+            "colored", default=False
+        ): cv.boolean,
+    },
+)
+async def addressable_bouncing_balls_effect_to_code(config, effect_id):
+    mngr = await cg.get_variable(config[CONF_EMNGR_ID])
+
+    var = cg.new_Pvariable(effect_id, config[CONF_NAME])
+    cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_colored(config["colored"]))
+    cg.add(var.set_manager(mngr))
+    return var
 
 @register_addressable_effect(
     "addressable_colors",

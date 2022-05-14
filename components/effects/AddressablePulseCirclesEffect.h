@@ -11,7 +11,7 @@ class AddressablePulseCirclesEffect : public AddressableAbstractEffect
 public:
     AddressablePulseCirclesEffect(const std::string &name) : AddressableAbstractEffect(name) {}
 
-    void setup() override
+    void start() override
     {
         this->pulse_center_x_ = random8(this->manager_->width() - 5) + 3;
         this->pulse_center_y_ = random8(this->manager_->height() - 5) + 3;

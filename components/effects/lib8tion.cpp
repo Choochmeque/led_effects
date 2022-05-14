@@ -1,8 +1,5 @@
-#define FASTLED_INTERNAL
-#include <stdint.h>
-#include "FastLED.h"
 
-FASTLED_NAMESPACE_BEGIN
+#include <stdint.h>
 
 #define RAND16_SEED  1337
 uint16_t rand16seed = RAND16_SEED;
@@ -248,4 +245,3 @@ void testnscale8x3()
 
 #endif
 
-FASTLED_NAMESPACE_END

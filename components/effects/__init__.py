@@ -229,7 +229,7 @@ async def addressable_moving_cube_effect_to_code(config, effect_id):
     return var
 
 @register_addressable_effect(
-    "addressable_pulse_cirlces",
+    "addressable_pulse_circlces",
     AddressablePulseCirclesEffect,
     "Pulse Circles",
     {

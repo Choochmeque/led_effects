@@ -6,6 +6,8 @@
 
 #include "EffectsManager.h"
 
+#include "lib8tion.h"
+
 namespace esphome {
 namespace effects {
 

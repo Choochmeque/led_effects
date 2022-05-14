@@ -231,7 +231,7 @@ async def addressable_moving_cube_effect_to_code(config, effect_id):
 @register_addressable_effect(
     "addressable_pulse_circlces",
     AddressablePulseCirclesEffect,
-    "Pulse Circles",
+    "Pulsing Circles",
     {
         cv.GenerateID(CONF_EMNGR_ID): cv.use_id(EffectsManagerComponent),
         cv.Optional(

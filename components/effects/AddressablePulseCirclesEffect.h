@@ -33,8 +33,7 @@ public:
 
         this->last_run_ = now;
 
-        // Dim all
-        it.all().fade_to_black(248);
+        this->dimAll(248);
 
         uint8_t _sat;
         if (this->step_ <= this->current_radius_) {

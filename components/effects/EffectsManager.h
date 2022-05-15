@@ -19,6 +19,8 @@ public:
     uint8_t width() const { return this->width_; }
     uint8_t height() const { return this->height_; }
 
+    uint32_t num_leds() const { return this->width_ * this->height_; }
+
 protected:
     uint8_t width_;
     uint8_t height_;

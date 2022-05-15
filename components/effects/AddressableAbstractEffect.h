@@ -11,6 +11,17 @@
 namespace esphome {
 namespace effects {
 
+const TProgmemRGBPalette16 *colorPallettes[] = {
+    &PartyColors_p,
+    &OceanColors_p,
+    &LavaColors_p,
+    &HeatColors_p,
+    &WaterfallColors_p,
+    &CloudColors_p,
+    &ForestColors_p,
+    &RainbowColors_p,
+    &RainbowStripeColors_p
+};
 class AddressableAbstractEffect : public light::AddressableLightEffect 
 {
 public:
@@ -113,8 +124,7 @@ protected:
 
     void dimAll(light::AddressableLight &it, uint8_t value)
     {
-        const uint32_t num_leds = this->manager_->width() * this->manager_->height();
-        for (uint16_t i = 0; i < num_leds; i++) {
+        for (uint16_t i = 0; i < this->manager_->num_leds(); i++) {
             it[i] = nscale8(it[i].get(), value);
         }
     }
@@ -129,6 +139,11 @@ protected:
         uint8_t b = color.b;
         nscale8x3(r, g, b, scaledown);
         return Color(r, g, b);
+    }
+
+    const TProgmemRGBPalette16 *GetColorPalette(uint8_t pct)
+    {
+        return colorPallettes[(uint8_t)(pct / 100.0f * ((sizeof(colorPallettes) / sizeof(TProgmemRGBPalette16 *)) - 0.01f))];
     }
 
     uint8_t MATRIX_TYPE{0};

@@ -52,7 +52,7 @@ public:
         float bballsHi = 0;
         float bballsTCycle = 0;
 
-        this->dimaAll(255 - this->update_interval_);
+        this->dimAll(it, 255 - this->update_interval_);
 
         for (int i = 0 ; i < bballsNUM ; i++) {
             bballsTCycle =  millis() - bballsTLast[i];

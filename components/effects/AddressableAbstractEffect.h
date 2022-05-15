@@ -124,8 +124,11 @@ protected:
     /// may dim all the way to 100% black.
     inline Color nscale8 (const Color &color, uint8_t scaledown )
     {
-        nscale8x3(color.r, color.g, color.b, scaledown);
-        return color;
+        uint8_t r = color.r;
+        uint8_t g = color.g;
+        uint8_t b = color.b;
+        nscale8x3(r, g, b, scaledown);
+        return Color(r, g, b);
     }
 
     uint8_t MATRIX_TYPE{0};

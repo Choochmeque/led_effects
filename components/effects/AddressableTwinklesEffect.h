@@ -17,12 +17,12 @@ public:
         this->ledsbuff_.resize(this->manager_->num_leds());
         for (uint32_t idx = 0; idx < this->manager_->num_leds(); idx++) {
             if (random8(this->scale_ % 11) == 0) {
-                ledsbuff[idx].r = random8();
-                ledsbuff[idx].g = random8(1, this->speed_ * 2 + 1);
-                ledsbuff[idx].b = random8();
+                this->ledsbuff_[idx].r = random8();
+                this->ledsbuff_[idx].g = random8(1, this->speed_ * 2 + 1);
+                this->ledsbuff_[idx].b = random8();
             } 
             else {
-                ledsbuff[idx] = 0;
+                this->ledsbuff_[idx] = 0;
             }
         }
     }
@@ -37,39 +37,39 @@ public:
         this->last_run_ = now;
 
         for (uint16_t idx = 0; idx < this->manager_->num_leds(); idx++) {
-            if (ledsbuff[idx].b == 0){
+            if (this->ledsbuff_[idx].b == 0){
                 if (random8(this->scale_ % 11) == 0 && this->hue_ > 0) {
-                    ledsbuff[idx].r = random8();
-                    ledsbuff[idx].g = random8(1, this->speed_ + 1);
-                    ledsbuff[idx].b = ledsbuff[idx].g;
+                    this->ledsbuff_[idx].r = random8();
+                    this->ledsbuff_[idx].g = random8(1, this->speed_ + 1);
+                    this->ledsbuff_[idx].b = this->ledsbuff_[idx].g;
                     this->hue_--;
                 }
             } 
-            else if (ledsbuff[idx].g <= this->speed_) {
-                if (ledsbuff[idx].b > 255 - ledsbuff[idx].g - this->mult_) {
-                    ledsbuff[idx].b = 255;
-                    ledsbuff[idx].g = ledsbuff[idx].g + this->speed_;
+            else if (this->ledsbuff_[idx].g <= this->speed_) {
+                if (this->ledsbuff_[idx].b > 255 - ledsbuff[idx].g - this->mult_) {
+                    this->ledsbuff_[idx].b = 255;
+                    this->ledsbuff_[idx].g = this->ledsbuff_[idx].g + this->speed_;
                 } 
                 else {
-                    ledsbuff[idx].b = ledsbuff[idx].b + ledsbuff[idx].g + this->mult_;
+                    this->ledsbuff_[idx].b = this->ledsbuff_[idx].b + this->ledsbuff_[idx].g + this->mult_;
                 }
             } 
             else {
-                if (ledsbuff[idx].b <= ledsbuff[idx].g - this->speed_ + this->mult_) {
-                    ledsbuff[idx].b = 0;
+                if (this->ledsbuff_[idx].b <= this->ledsbuff_[idx].g - this->speed_ + this->mult_) {
+                    this->ledsbuff_[idx].b = 0;
                     this->hue_++;
                 } 
                 else {
-                    ledsbuff[idx].b = ledsbuff[idx].b - ledsbuff[idx].g + this->speed_ - this->mult_;
+                    this->ledsbuff_[idx].b = this->ledsbuff_[idx].b - this->ledsbuff_[idx].g + this->speed_ - this->mult_;
                 }
             }
-            if (ledsbuff[idx].b == 0) {
+            if (this->ledsbuff_[idx].b == 0) {
                 it[idx] = Color::BLACK;
             } 
             else {
                 it[idx] = ColorFromPalette(*GetColorPalette(this->scale_),
-                                            ledsbuff[idx].r,
-                                            ledsbuff[idx].b);
+                                            this->ledsbuff_[idx].r,
+                                            this->ledsbuff_[idx].b);
             }
         }
 

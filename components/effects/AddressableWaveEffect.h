@@ -48,7 +48,7 @@ public:
                 n = quadwave8(y * 2 + waveTheta) / this->wave_scale_;
                 it[getPixelNumber(n, y)] = ColorFromPalette(*GetColorPalette(this->scale_), this->hue_ + y);
                 if (this->wave_count_ != 1) {
-                    it[getPixelNumber(this->manager_->width() - 1 - n, y] = ColorFromPalette(*GetColorPalette(this->scale_), this->hue_ + y);
+                    it[getPixelNumber(this->manager_->width() - 1 - n, y)] = ColorFromPalette(*GetColorPalette(this->scale_), this->hue_ + y);
                 }
             }
             break;
@@ -90,7 +90,7 @@ public:
             hueUpdate++;
         }
 
-        myMatrix->applyBlur2d(20);
+        this->applyBlur2d(it, 20);
 
         it.schedule_show();
     }

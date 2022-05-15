@@ -46,7 +46,7 @@ public:
                 }
             } 
             else if (this->ledsbuff_[idx].g <= this->speed_) {
-                if (this->ledsbuff_[idx].b > 255 - ledsbuff[idx].g - this->mult_) {
+                if (this->ledsbuff_[idx].b > 255 - this->ledsbuff_[idx].g - this->mult_) {
                     this->ledsbuff_[idx].b = 255;
                     this->ledsbuff_[idx].g = this->ledsbuff_[idx].g + this->speed_;
                 } 

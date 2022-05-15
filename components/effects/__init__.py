@@ -140,7 +140,7 @@ async def addressable_colors_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="37ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            CONF_SCALE, default="1"
+            "sparkles", default="1"
         ): cv.int_range(0, 255),
         cv.Optional(
             CONF_SCALE, default=True

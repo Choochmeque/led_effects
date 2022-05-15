@@ -93,5 +93,5 @@ esphome::Color ColorFromPalette( const TProgmemRGBPalette16& pal, uint8_t index,
         }
     }
 
-    return CRGB( red1, green1, blue1);
+    return esphome::Color( red1, green1, blue1);
 }

@@ -475,7 +475,7 @@ async def addressable_waterfall_effect_to_code(config, effect_id):
         ): cv.int_range(0, 255),
     },
 )
-async def addressable_white_color_effect_to_code(config, effect_id):
+async def addressable_wave_effect_to_code(config, effect_id):
     mngr = await cg.get_variable(config[CONF_EMNGR_ID])
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])

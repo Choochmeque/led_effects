@@ -19,14 +19,13 @@ inline uint8_t lsrX4( uint8_t dividend)
     return dividend;
 }
 
-CRGB ColorFromPalette( const TProgmemRGBPalette16& pal, uint8_t index, uint8_t brightness, TBlendType blendType)
+esphome::Color ColorFromPalette( const TProgmemRGBPalette16& pal, uint8_t index, uint8_t brightness, TBlendType blendType)
 {
     //      hi4 = index >> 4;
     uint8_t hi4 = lsrX4(index);
     uint8_t lo4 = index & 0x0F;
 
-    CRGB entry   =  FL_PGM_READ_DWORD_NEAR( &(pal[0]) + hi4 );
-    
+    esphome::Color entry   =  FL_PGM_READ_DWORD_NEAR( &(pal[0]) + hi4 );
 
     uint8_t red1   = entry.red;
     uint8_t green1 = entry.green;

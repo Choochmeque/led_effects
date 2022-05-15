@@ -4,6 +4,8 @@
 #include "esphome/components/light/esp_hsv_color.h"
 #include "esphome/components/light/addressable_light_effect.h"
 
+#include "lib8tion.h"
+
 // Palettes
 //
 // RGB Palettes map an 8-bit value (0..255) to an RGB color.
@@ -75,7 +77,7 @@ typedef uint32_t TProgmemHSVPalette32[32];
 
 typedef enum { NOBLEND=0, LINEARBLEND=1 } TBlendType;
 
-Color ColorFromPalette( const TProgmemRGBPalette16& pal,
+esphome::Color ColorFromPalette( const TProgmemRGBPalette16& pal,
                        uint8_t index,
                        uint8_t brightness=255,
                        TBlendType blendType=LINEARBLEND);

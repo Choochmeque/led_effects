@@ -477,14 +477,18 @@ protected:
         uint8_t keep = 255 - blur_amount;
         uint8_t seep = blur_amount >> 1;
         for( uint8_t row = 0; row < height; row++) {
-            Color carryover = CRGB::Black;
+            Color carryover = Color::Black;
             for( uint8_t i = 0; i < width; i++) {
                 Color cur = it[getPixelNumber(i, row)].get();
                 Color part = cur;
                 part = nscale8(part, seep);
                 cur = nscale8(cur, keep);
                 cur += carryover;
-                if( i) it[getPixelNumber(i-1, row)] += part;
+                if(i) {
+                    Color c = it[getPixelNumber(i-1, row)].get();
+                    c += part;
+                    it[getPixelNumber(i-1, row)] = c;
+                }
                 it[getPixelNumber(i, row)] = cur;
                 carryover = part;
             }
@@ -498,14 +502,18 @@ protected:
         uint8_t keep = 255 - blur_amount;
         uint8_t seep = blur_amount >> 1;
         for( uint8_t col = 0; col < width; ++col) {
-            Color carryover = CRGB::Black;
+            Color carryover = Color::Black;
             for( uint8_t i = 0; i < height; ++i) {
-                Color cur = it[getPixelNumber(col, i)];
+                Color cur = it[getPixelNumber(col, i)].get();
                 Color part = cur;
                 nscale8(part, seep);
                 nscale8(cur, keep);
                 cur += carryover;
-                if( i) it[getPixelNumber(col,i-1)] += part;
+                if(i) {
+                    Color c = it[getPixelNumber(col, i-1)].get();
+                    c += part;
+                    it[getPixelNumber(col, i-1)] = c;
+                }
                 it[getPixelNumber(col,i)] = cur;
                 carryover = part;
             }

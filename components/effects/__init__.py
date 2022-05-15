@@ -384,7 +384,7 @@ async def addressable_snow_effect_to_code(config, effect_id):
     return var
 
 @register_addressable_effect(
-    "addressable_waterfall_color",
+    "addressable_waterfall",
     AddressableWaterfallPaletteEffect,
     "Waterfall",
     {

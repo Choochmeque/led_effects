@@ -111,6 +111,23 @@ protected:
             uint32_t{color.blue};
     }
 
+    void dimAll(light::AddressableLight &it, uint8_t value)
+    {
+        const uint32_t num_leds = this->manager_->width() * this->manager_->height();
+        for (uint16_t i = 0; i < num_leds; i++) {
+            it[i] = nscale8(it[i].get(), value);
+        }
+    }
+
+    /// scale down a RGB to N 256ths of it's current brightness, using
+    /// 'plain math' dimming rules, which means that if the low light levels
+    /// may dim all the way to 100% black.
+    inline Color nscale8 (const Color &color, uint8_t scaledown )
+    {
+        nscale8x3(color.r, color.g, color.b, scaledown);
+        return color;
+    }
+
     uint8_t MATRIX_TYPE{0};
 };
 

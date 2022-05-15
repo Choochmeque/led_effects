@@ -6,6 +6,13 @@
 namespace esphome {
 namespace effects {
 
+// TODO:
+enum _type
+{
+    RandomCircles = 1,
+
+};
+
 class AddressablePulseCirclesEffect : public AddressableAbstractEffect 
 {
 public:
@@ -115,6 +122,8 @@ public:
             }
         }
     }
+
+    void set_mode(uint8_t mode) { this->mode_ = mode; }
 
 protected:
     uint8_t pulse_center_x_{0};

@@ -54,6 +54,8 @@ AddressableWhiteColorEffect = effects_ns.class_(
 
 RAINBOW_TYPES = {"horizontal": effects_ns.Horizontal, "vertical": effects_ns.Vertical, "diagonal": effects_ns.Diagonal, "twirl": effects_ns.Twirl}
 
+CONF_SCALE = "scale"
+
 CONFIG_SCHEMA = cv.All(cv.Schema({}), cv.only_with_arduino)
 
 # TODO: add effects manager component with width, height and matrix type properties
@@ -88,7 +90,7 @@ async def to_code(config):
             CONF_UPDATE_INTERVAL, default="100ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="20"
+            CONF_SCALE, default="20"
         ): cv.int_range(0, 255),
         cv.Optional(
             "colored", default=False
@@ -100,7 +102,7 @@ async def addressable_bouncing_balls_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_colored(config["colored"]))
     cg.add(var.set_manager(mngr))
     return var
@@ -115,7 +117,7 @@ async def addressable_bouncing_balls_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="112ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="1"
+            CONF_SCALE, default="1"
         ): cv.int_range(0, 255),
     },
 )
@@ -124,7 +126,7 @@ async def addressable_colors_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_manager(mngr))
     return var
 
@@ -138,10 +140,10 @@ async def addressable_colors_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="37ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="1"
+            CONF_SCALE, default="1"
         ): cv.int_range(0, 255),
         cv.Optional(
-            "sparkles", default=True
+            CONF_SCALE, default=True
         ): cv.boolean,
     },
 )
@@ -150,7 +152,7 @@ async def addressable_fire_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_sparkles(config["sparkles"]))
     cg.add(var.set_manager(mngr))
     return var
@@ -165,7 +167,7 @@ async def addressable_fire_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="127ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="10"
+            CONF_SCALE, default="10"
         ): cv.int_range(0, 255),        
     },
 )
@@ -174,7 +176,7 @@ async def addressable_lighters_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_manager(mngr))
     return var
 
@@ -188,7 +190,7 @@ async def addressable_lighters_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="255ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="25"
+            CONF_SCALE, default="25"
         ): cv.int_range(0, 255),
     },
 )
@@ -197,7 +199,7 @@ async def addressable_matrix_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_manager(mngr))
     return var
 
@@ -211,7 +213,7 @@ async def addressable_matrix_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="100ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="20"
+            CONF_SCALE, default="20"
         ): cv.int_range(0, 255),
         cv.Optional(
             "random", default=True
@@ -223,7 +225,7 @@ async def addressable_moving_cube_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_random_color(config["random"]))
     cg.add(var.set_manager(mngr))
     return var
@@ -238,7 +240,7 @@ async def addressable_moving_cube_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="100ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="20"
+            CONF_SCALE, default="20"
         ): cv.int_range(0, 255),        
     },
 )
@@ -247,7 +249,7 @@ async def addressable_pulse_circles_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_manager(mngr))
     return var
 
@@ -261,7 +263,7 @@ async def addressable_pulse_circles_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="100ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="20"
+            CONF_SCALE, default="20"
         ): cv.int_range(0, 255),        
     },
 )
@@ -270,7 +272,7 @@ async def addressable_rain_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_manager(mngr))
     return var
 
@@ -284,7 +286,7 @@ async def addressable_rain_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="100ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="18"
+            CONF_SCALE, default="18"
         ): cv.int_range(0, 255),
         cv.Optional("type", default="Horizontal"): cv.one_of(
             *RAINBOW_TYPES, upper=False
@@ -297,7 +299,7 @@ async def aaddressable_rainbow_effect_to_code(config, effect_id):
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
     cg.add(var.set_rainbow_type(RAINBOW_TYPES[config["type"]]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_manager(mngr))
     return var
 
@@ -311,7 +313,7 @@ async def aaddressable_rainbow_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="100ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="20"
+            CONF_SCALE, default="20"
         ): cv.int_range(0, 255),
     },
 )
@@ -320,7 +322,7 @@ async def addressable_sinusoid_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_manager(mngr))
     return var
 
@@ -334,7 +336,7 @@ async def addressable_sinusoid_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="255ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="33"
+            CONF_SCALE, default="33"
         ): cv.int_range(0, 255),
     },
 )
@@ -343,7 +345,7 @@ async def addressable_snow_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_manager(mngr))
     return var
 
@@ -357,7 +359,7 @@ async def addressable_snow_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="80ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="100"
+            CONF_SCALE, default="100"
         ): cv.int_range(0, 255),
         cv.Optional(
             "step", default="100"
@@ -372,7 +374,7 @@ async def addressable_snow_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_tail_step(config["step"]))
     cg.add(var.set_saturation(config["saturation"]))
     cg.add(var.set_manager(mngr))
@@ -388,7 +390,7 @@ async def addressable_snow_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="100ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "scale", default="20"
+            CONF_SCALE, default="20"
         ): cv.int_range(0, 255),
     },
 )
@@ -397,6 +399,6 @@ async def addressable_white_color_effect_to_code(config, effect_id):
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
-    cg.add(var.set_scale(config["scale"]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_manager(mngr))
     return var

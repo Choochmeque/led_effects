@@ -25,7 +25,7 @@ esphome::Color ColorFromPalette( const TProgmemRGBPalette16& pal, uint8_t index,
     uint8_t hi4 = lsrX4(index);
     uint8_t lo4 = index & 0x0F;
 
-    esphome::Color entry   =  pgm_read_dword_near( &(pal[0]) + hi4 );
+    esphome::Color entry   =  esphome::Color(pgm_read_dword_near( &(pal[0]) + hi4 ));
 
     uint8_t red1   = entry.red;
     uint8_t green1 = entry.green;
@@ -36,9 +36,9 @@ esphome::Color ColorFromPalette( const TProgmemRGBPalette16& pal, uint8_t index,
     if( blend ) {
 
         if( hi4 == 15 ) {
-            entry =   pgm_read_dword_near( &(pal[0]) );
+            entry =   esphome::Color(pgm_read_dword_near( &(pal[0]) ));
         } else {
-            entry =   pgm_read_dword_near( &(pal[1]) + hi4 );
+            entry =   esphome::Color(pgm_read_dword_near( &(pal[1]) + hi4 ));
         }
 
         uint8_t f2 = lo4 << 4;

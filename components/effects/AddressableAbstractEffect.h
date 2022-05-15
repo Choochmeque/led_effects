@@ -477,7 +477,7 @@ protected:
         uint8_t keep = 255 - blur_amount;
         uint8_t seep = blur_amount >> 1;
         for( uint8_t row = 0; row < height; row++) {
-            Color carryover = Color::Black;
+            Color carryover = Color::BLACK;
             for( uint8_t i = 0; i < width; i++) {
                 Color cur = it[getPixelNumber(i, row)].get();
                 Color part = cur;
@@ -502,7 +502,7 @@ protected:
         uint8_t keep = 255 - blur_amount;
         uint8_t seep = blur_amount >> 1;
         for( uint8_t col = 0; col < width; ++col) {
-            Color carryover = Color::Black;
+            Color carryover = Color::BLACK;
             for( uint8_t i = 0; i < height; ++i) {
                 Color cur = it[getPixelNumber(col, i)].get();
                 Color part = cur;

@@ -460,6 +460,58 @@ protected:
         return colorPallettes[(uint8_t)(pct / 100.0f * ((sizeof(colorPallettes) / sizeof(TProgmemRGBPalette16 *)) - 0.01f))];
     }
 
+    void applyBlur2d(light::AddressableLight &it, uint8_t amount)
+    {
+        blur2d(it, this->manager_->width(), this->manager_->height(), amount);
+    }
+
+    void blur2d(light::AddressableLight &it, uint8_t width, uint8_t height, fract8 blur_amount)
+    {
+        blurRows(it, width, height, blur_amount);
+        blurColumns(it, width, height, blur_amount);
+    }
+
+    void blurRows(light::AddressableLight &it, uint8_t width, uint8_t height, fract8 blur_amount)
+    {
+        // blur rows same as columns, for irregular matrix
+        uint8_t keep = 255 - blur_amount;
+        uint8_t seep = blur_amount >> 1;
+        for( uint8_t row = 0; row < height; row++) {
+            Color carryover = CRGB::Black;
+            for( uint8_t i = 0; i < width; i++) {
+                Color cur = it[getPixelNumber(i, row)].get();
+                Color part = cur;
+                part = nscale8(part, seep);
+                cur = nscale8(cur, keep);
+                cur += carryover;
+                if( i) it[getPixelNumber(i-1, row)] += part;
+                it[getPixelNumber(i, row)] = cur;
+                carryover = part;
+            }
+        }
+    }
+
+    // blurColumns: perform a blur1d on each column of a rectangular matrix
+    void blurColumns(light::AddressableLight &it, uint8_t width, uint8_t height, fract8 blur_amount)
+    {
+        // blur columns
+        uint8_t keep = 255 - blur_amount;
+        uint8_t seep = blur_amount >> 1;
+        for( uint8_t col = 0; col < width; ++col) {
+            Color carryover = CRGB::Black;
+            for( uint8_t i = 0; i < height; ++i) {
+                Color cur = it[getPixelNumber(col, i)];
+                Color part = cur;
+                nscale8(part, seep);
+                nscale8(cur, keep);
+                cur += carryover;
+                if( i) it[getPixelNumber(col,i-1)] += part;
+                it[getPixelNumber(col,i)] = cur;
+                carryover = part;
+            }
+        }
+    }
+
     uint8_t MATRIX_TYPE{0};
 };
 

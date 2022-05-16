@@ -75,6 +75,64 @@ static int16_t inline __attribute__((always_inline))  avg15_inline_avr_mul( int1
 #define LERP(a,b,u) lerp15by16(a,b,u)
 #endif
 
+static int8_t  inline __attribute__((always_inline)) grad8(uint8_t hash, int8_t x, int8_t y, int8_t z) {
+    hash &= 0xF;
+
+    int8_t u, v;
+    //u = (hash&8)?y:x;
+    u = selectBasedOnHashBit( hash, 3, y, x);
+
+    v = hash<4?y:hash==12||hash==14?x:z;
+
+    if(hash&1) { u = -u; }
+    if(hash&2) { v = -v; }
+
+    return avg7(u,v);
+#endif
+}
+
+static int8_t inline __attribute__((always_inline)) grad8(uint8_t hash, int8_t x, int8_t y)
+{
+    // since the tests below can be done bit-wise on the bottom
+    // three bits, there's no need to mask off the higher bits
+    //  hash = hash & 7;
+
+    int8_t u,v;
+    if( hash & 4) {
+        u = y; v = x;
+    } else {
+        u = x; v = y;
+    }
+
+    if(hash&1) { u = -u; }
+    if(hash&2) { v = -v; }
+
+    return avg7(u,v);
+}
+
+static int8_t inline __attribute__((always_inline)) grad8(uint8_t hash, int8_t x)
+{
+    // since the tests below can be done bit-wise on the bottom
+    // four bits, there's no need to mask off the higher bits
+    //	hash = hash & 15;
+
+    int8_t u,v;
+    if(hash & 8) {
+        u=x; v=x;
+    } else {
+    if(hash & 4) {
+        u=1; v=x;
+    } else {
+        u=x; v=1;
+    }
+    }
+
+    if(hash&1) { u = -u; }
+    if(hash&2) { v = -v; }
+
+    return avg7(u,v);
+}
+
 static int8_t inline __attribute__((always_inline)) lerp7by8( int8_t a, int8_t b, fract8 frac)
 {
     // int8_t delta = b - a;

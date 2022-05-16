@@ -1,3 +1,6 @@
+#include "esphome/components/light/esp_hsv_color.h"
+#include "esphome/components/light/addressable_light_effect.h"
+
 #include "lib8tion.h"
 
 #define P(x) pgm_read_byte_near(p + x)

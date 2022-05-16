@@ -338,7 +338,7 @@ const TProgmemRGBPalette16 *colorPallettes[] = {
     &RainbowStripeColors_p
 };
 
-const CRGBPalette16 WoodFireColors_p = {
+const CRGBPalette16 WoodFireColors_p {
     HTMLColorCode::Black, HTMLColorCode::OrangeRed, HTMLColorCode::Orange, HTMLColorCode::Gold
 };
 const CRGBPalette16 NormalFire_p = {

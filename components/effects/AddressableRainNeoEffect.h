@@ -42,7 +42,7 @@ public:
         myMatrix->fadeToBlackBy(255 - tailLength);
 
         if (!lightning && storm) {
-            lightning = new uint8_t[this->num_leds()];
+            lightning = new uint8_t[this->manager_->num_leds()];
         } else if (lightning && !storm) {
             delete[] lightning;
             lightning = nullptr;
@@ -82,19 +82,19 @@ public:
             // Step 4. Add splash if called for
             if (splashes) {
                 // FIXME, this is broken
-                uint8_t j = splashArray[x];
-                uint8_t v = tempMatrix[x][0];
+                uint8_t j = this->splash_array_[x];
+                uint8_t v = this->temp_matrix_[x][0];
 
                 if (j >= backgroundDepth) {
                     it[getPixelNumber(myMatrix->wrapX(x - 2), 0)] = ColorFromPalette(rain_p, j/3);
                     it[getPixelNumber(myMatrix->wrapX(x + 2), 0)] = ColorFromPalette(rain_p, j/3);
-                    splashArray[x] = 0;   // Reset splash
+                    this->splash_array_[x] = 0;   // Reset splash
                 }
 
                 if (v >= backgroundDepth) {
                     it[getPixelNumber(myMatrix->wrapX(x - 1), 1)] = ColorFromPalette(rain_p, v/2);
                     it[getPixelNumber(myMatrix->wrapX(x + 1), 1)] = ColorFromPalette(rain_p, v/2);
-                    splashArray[x] = v; // Prep splash for next frame
+                    this->splash_array_[x] = v; // Prep splash for next frame
                 }
             }
 

@@ -1,5 +1,8 @@
 #include <string.h>
 
+#include "lib8tion.h"
+
+#define FASTLED_NOISE_ALLOW_AVERAGE_TO_OVERFLOW 1
 
 #define P(x) FL_PGM_READ_BYTE_NEAR(p + x)
 

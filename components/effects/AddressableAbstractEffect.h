@@ -360,7 +360,7 @@ const CRGBPalette16 RubidiumFireColors_p = {
     HTMLColorCode::Black, HTMLColorCode::Indigo, HTMLColorCode::Indigo, HTMLColorCode::DarkBlue
 };
 const CRGBPalette16 PotassiumFireColors_p = {
-    CRGHTMLColorCodeB::Indigo, HTMLColorCode::MediumPurple, HTMLColorCode::DeepPink
+    HTMLColorCode::Indigo, HTMLColorCode::MediumPurple, HTMLColorCode::DeepPink
 };
 const CRGBPalette16 LithiumFireColors_p = {
     HTMLColorCode::Black, HTMLColorCode::FireBrick, HTMLColorCode::Pink, HTMLColorCode::DeepPink

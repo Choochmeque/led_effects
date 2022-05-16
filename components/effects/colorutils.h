@@ -98,6 +98,25 @@ public:
     esphome::Color entries[16];
     CRGBPalette16() {};
 
+    CRGBPalette16(const CRGBPalette16& rhs)
+    {
+        memmove8((void *) &(entries[0]), &(rhs.entries[0]), sizeof( ntries));
+    }
+    CRGBPalette16(const esphome::Color rhs[16])
+    {
+        memmove8( (void *) &(entries[0]), &(rhs[0]), sizeof(entries));
+    }
+    CRGBPalette16& operator=(const CRGBPalette16& rhs)
+    {
+        memmove8((void *) &(entries[0]), &(rhs.entries[0]), sizeof(entries));
+        return *this;
+    }
+    CRGBPalette16& operator=(const esphome::Color rhs[16])
+    {
+        memmove8( (void *) &(entries[0]), &(rhs[0]), sizeof(entries));
+        return *this;
+    }
+
     CRGBPalette16& operator=( const TProgmemRGBPalette16& rhs)
     {
         for( uint8_t i = 0; i < 16; ++i) {

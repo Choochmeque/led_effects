@@ -100,7 +100,7 @@ public:
 
     CRGBPalette16(const CRGBPalette16& rhs)
     {
-        memmove8((void *) &(entries[0]), &(rhs.entries[0]), sizeof( ntries));
+        memmove8((void *) &(entries[0]), &(rhs.entries[0]), sizeof(entries));
     }
     CRGBPalette16(const esphome::Color rhs[16])
     {

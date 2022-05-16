@@ -75,20 +75,42 @@ static int16_t inline __attribute__((always_inline))  avg15_inline_avr_mul( int1
 #define LERP(a,b,u) lerp15by16(a,b,u)
 #endif
 
-static int8_t  inline __attribute__((always_inline)) grad8(uint8_t hash, int8_t x, int8_t y, int8_t z) {
-    hash &= 0xF;
-
-    int8_t u, v;
-    //u = (hash&8)?y:x;
-    u = selectBasedOnHashBit( hash, 3, y, x);
-
-    v = hash<4?y:hash==12||hash==14?x:z;
-
-    if(hash&1) { u = -u; }
-    if(hash&2) { v = -v; }
-
-    return avg7(u,v);
+// selectBasedOnHashBit performs this:
+//   result = (hash & (1<<bitnumber)) ? a : b
+// but with an AVR asm version that's smaller and quicker than C
+// (and probably not worth including in lib8tion)
+static int8_t inline __attribute__((always_inline)) selectBasedOnHashBit(uint8_t hash, uint8_t bitnumber, int8_t a, int8_t b) {
+	int8_t result;
+#if !defined(__AVR__)
+	result = (hash & (1<<bitnumber)) ? a : b;
+#else
+	asm volatile(
+		"mov %[result],%[a]          \n\t"
+		"sbrs %[hash],%[bitnumber]   \n\t"
+		"mov %[result],%[b]          \n\t"
+		: [result] "=r" (result)
+		: [hash] "r" (hash),
+		  [bitnumber] "M" (bitnumber),
+          [a] "r" (a),
+		  [b] "r" (b)
+		);
 #endif
+	return result;
+}
+
+static int8_t  inline __attribute__((always_inline)) grad8(uint8_t hash, int8_t x, int8_t y, int8_t z) {
+  hash &= 0xF;
+
+  int8_t u, v;
+  //u = (hash&8)?y:x;
+  u = selectBasedOnHashBit( hash, 3, y, x);
+
+  v = hash<4?y:hash==12||hash==14?x:z;
+
+  if(hash&1) { u = -u; }
+  if(hash&2) { v = -v; }
+
+  return avg7(u,v);
 }
 
 static int8_t inline __attribute__((always_inline)) grad8(uint8_t hash, int8_t x, int8_t y)

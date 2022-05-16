@@ -110,6 +110,11 @@ public:
 
 typedef enum { NOBLEND=0, LINEARBLEND=1 } TBlendType;
 
+esphome::Color ColorFromPalette(const CRGBPalette16& pal,
+                      uint8_t index,
+                      uint8_t brightness=255,
+                      TBlendType blendType=LINEARBLEND);
+
 esphome::Color ColorFromPalette(const TProgmemRGBPalette16& pal,
                        uint8_t index,
                        uint8_t brightness=255,

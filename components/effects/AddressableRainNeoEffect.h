@@ -63,7 +63,7 @@ public:
             for (int i = 0; i < this->manager_->height(); i++) {
                 if (this->temp_matrix_[x][i] >= backgroundDepth) {  // Don't move empty cells
                     if (i > 0) {
-                        this->temp_matrix_[x][myMatrix->wrapY(i - 1)] = this->temp_matrix_[x][i];
+                        this->temp_matrix_[x][wrapY(i - 1)] = this->temp_matrix_[x][i];
                     }
                     this->temp_matrix_[x][i] = 0;
                 }
@@ -88,14 +88,14 @@ public:
                 uint8_t v = this->temp_matrix_[x][0];
 
                 if (j >= backgroundDepth) {
-                    it[getPixelNumber(myMatrix->wrapX(x - 2), 0)] = ColorFromPalette(rain_p, j/3);
-                    it[getPixelNumber(myMatrix->wrapX(x + 2), 0)] = ColorFromPalette(rain_p, j/3);
+                    it[getPixelNumber(wrapX(x - 2), 0)] = ColorFromPalette(rain_p, j/3);
+                    it[getPixelNumber(wrapX(x + 2), 0)] = ColorFromPalette(rain_p, j/3);
                     this->splash_array_[x] = 0;   // Reset splash
                 }
 
                 if (v >= backgroundDepth) {
-                    it[getPixelNumber(myMatrix->wrapX(x - 1), 1)] = ColorFromPalette(rain_p, v/2);
-                    it[getPixelNumber(myMatrix->wrapX(x + 1), 1)] = ColorFromPalette(rain_p, v/2);
+                    it[getPixelNumber(wrapX(x - 1), 1)] = ColorFromPalette(rain_p, v/2);
+                    it[getPixelNumber(wrapX(x + 1), 1)] = ColorFromPalette(rain_p, v/2);
                     this->splash_array_[x] = v; // Prep splash for next frame
                 }
             }
@@ -106,7 +106,7 @@ public:
                     Serial.println("lightning malloc failed");
                     return;
                 } else {
-                    memset(lightning, 0, myMatrix->getNumLeds() * sizeof(*lightning));
+                    memset(lightning, 0, this->manager_->num_leds() * sizeof(*lightning));
                 }
 
                 if (random16() < 72) {    // Odds of a lightning bolt
@@ -119,7 +119,7 @@ public:
                                 switch (dir) {
                                 case 0:
                                     it[getPixelNumber(lx + 1, ly - 1)] = Color(lightningColor);
-                                    lightning[myMatrix->wrapX(lx + 1) + (ly - 1) * this->manager_->width()] = 255; // move down and right
+                                    lightning[wrapX(lx + 1) + (ly - 1) * this->manager_->width()] = 255; // move down and right
                                     break;
                                 case 1:
                                     it[getPixelNumber(lx, ly - 1)] = Color(128, 128, 128);
@@ -127,13 +127,13 @@ public:
                                     break;
                                 case 2:
                                     it[getPixelNumber(lx - 1, ly - 1)] = Color(128, 128, 128);
-                                    lightning[myMatrix->wrapX(lx - 1) + (ly - 1) * this->manager_->width()] = 255; // move down and left
+                                    lightning[wrapX(lx - 1) + (ly - 1) * this->manager_->width()] = 255; // move down and left
                                     break;
                                 case 3:
                                     it[getPixelNumber(lx - 1, ly - 1)] = Color(128, 128, 128);
-                                    lightning[myMatrix->wrapX(lx - 1) + (ly - 1) * this->manager_->width()] = 255; // fork down and left
+                                    lightning[wrapX(lx - 1) + (ly - 1) * this->manager_->width()] = 255; // fork down and left
                                     it[getPixelNumber(lx - 1, ly - 1)] = Color(128, 128, 128);
-                                    lightning[myMatrix->wrapX(lx + 1) + (ly - 1) * this->manager_->width()] = 255; // fork down and right
+                                    lightning[wrapX(lx + 1) + (ly - 1) * this->manager_->width()] = 255; // fork down and right
                                     break;
                                 }
                             }
@@ -158,7 +158,7 @@ public:
                     uint8_t noiseData = qsub8(inoise8(noiseX + xoffset, noiseY + yoffset, noiseZ), 16);
                     noiseData = qadd8(noiseData, scale8(noiseData,39));
                     noise[x * this->cloud_height_ + z] = scale8(noise[x * this->cloud_height_ + z], dataSmoothing) + scale8(noiseData, 256 - dataSmoothing);
-                    myMatrix->blendPixelXY(x, this->manager_->height() - z - 1, ColorFromPalette(rainClouds_p, noise[x * this->cloud_height_ + z]), (this->cloud_height_ - z) * (250 / this->cloud_height_));
+                    blendPixelXY(it, x, this->manager_->height() - z - 1, ColorFromPalette(rainClouds_p, noise[x * this->cloud_height_ + z]), (this->cloud_height_ - z) * (250 / this->cloud_height_));
                 }
                 noiseZ ++;
             }

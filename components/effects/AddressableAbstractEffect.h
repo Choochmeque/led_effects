@@ -520,6 +520,23 @@ protected:
         }
     }
 
+    void blendPixelXY(light::AddressableLight &it, uint8_t x, uint8_t y, const Color &color, uint8_t amount)
+    {
+        Color c = it[getPixelNumber(x, y)].get();
+        nblend(c, color, amount);
+        it[getPixelNumber(x, y)] = c;
+    }
+
+    uint8_t wrapX(int8_t x)
+    {
+        return mod8(x + this->manager_->width(), this->manager_->width());
+    }
+
+    uint8_t wrapY(int8_t y)
+    {
+        return mod8(y + this->manager_->height(), this->manager_->height());
+    }
+
     uint8_t MATRIX_TYPE{0};
 };
 

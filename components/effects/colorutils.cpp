@@ -97,9 +97,9 @@ esphome::Color ColorFromPalette(const CRGBPalette16& pal, uint8_t index, uint8_t
     // since hi4 is always 0..15, hi4 * sizeof(CRGB) can be a single-byte value,
     // instead of the two byte 'int' that avr-gcc defaults to.
     // So, we multiply hi4 X sizeof(CRGB), giving hi4XsizeofCRGB;
-    uint8_t hi4XsizeofCRGB = hi4 * sizeof(CRGB);
+    uint8_t hi4XsizeofCRGB = hi4 * sizeof(esphome::Color);
     // We then add that to a base array pointer.
-    const CRGB* entry = (CRGB*)( (uint8_t*)(&(pal[0])) + hi4XsizeofCRGB);
+    const esphome::Color* entry = (esphome::Color*)( (uint8_t*)(&(pal[0])) + hi4XsizeofCRGB);
     
     uint8_t blend = lo4 && (blendType != NOBLEND);
     

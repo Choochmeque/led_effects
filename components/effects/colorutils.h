@@ -94,6 +94,54 @@ public:
     esphome::Color entries[16];
     CRGBPalette16() {};
 
+    CRGBPalette16& operator=( const TProgmemRGBPalette16& rhs)
+    {
+        for( uint8_t i = 0; i < 16; ++i) {
+            entries[i] =  pgm_read_dword_near( rhs + i);
+        }
+        return *this;
+    }
+
+    bool operator==( const CRGBPalette16 rhs)
+    {
+        const uint8_t* p = (const uint8_t*)(&(this->entries[0]));
+        const uint8_t* q = (const uint8_t*)(&(rhs.entries[0]));
+        if( p == q) return true;
+        for( uint8_t i = 0; i < (sizeof( entries)); ++i) {
+            if( *p != *q) return false;
+            ++p;
+            ++q;
+        }
+        return true;
+    }
+    bool operator!=( const CRGBPalette16 rhs)
+    {
+        return !( *this == rhs);
+    }
+    
+    inline esphome::Color& operator[] (uint8_t x) __attribute__((always_inline))
+    {
+        return entries[x];
+    }
+    inline const esphome::Color& operator[] (uint8_t x) const __attribute__((always_inline))
+    {
+        return entries[x];
+    }
+
+    inline esphome::Color& operator[] (int x) __attribute__((always_inline))
+    {
+        return entries[(uint8_t)x];
+    }
+    inline const esphome::Color& operator[] (int x) const __attribute__((always_inline))
+    {
+        return entries[(uint8_t)x];
+    }
+
+    operator esphome::Color*()
+    {
+        return &(entries[0]);
+    }
+
     CRGBPalette16(const esphome::Color &c1, const esphome::Color &c2)
     {
         fill_gradient_RGB(&(entries[0]), 16, c1, c2);

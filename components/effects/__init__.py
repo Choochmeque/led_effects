@@ -21,6 +21,9 @@ AddressableColorsEffect = effects_ns.class_(
 AddressableFireEffect = effects_ns.class_(
     "AddressableFireEffect", AddressableLightEffect
 )
+AddressableFire12Effect = effects_ns.class_(
+    "AddressableFire12Effect", AddressableLightEffect
+)
 AddressableLightersEffect = effects_ns.class_(
     "AddressableLightersEffect", AddressableLightEffect
 )
@@ -155,10 +158,10 @@ async def addressable_colors_effect_to_code(config, effect_id):
             CONF_UPDATE_INTERVAL, default="37ms"
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
-            "sparkles", default="1"
+            "sparkles", default=True
         ): cv.int_range(0, 255),
         cv.Optional(
-            CONF_SCALE, default=True
+            CONF_SCALE, default="1"
         ): cv.boolean,
     },
 )
@@ -169,6 +172,29 @@ async def addressable_fire_effect_to_code(config, effect_id):
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
     cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_sparkles(config["sparkles"]))
+    cg.add(var.set_manager(mngr))
+    return var
+
+@register_addressable_effect(
+    "addressable_fire_12",
+    AddressableFire12Effect,
+    "Fire 12",
+    {
+        cv.GenerateID(CONF_EMNGR_ID): cv.use_id(EffectsManagerComponent),
+        cv.Optional(
+            CONF_UPDATE_INTERVAL, default="100ms"
+        ): cv.positive_time_period_milliseconds,
+        cv.Optional(
+            CONF_SCALE, default="20"
+        ): cv.int_range(0, 255),
+    },
+)
+async def addressable_fire_12_effect_to_code(config, effect_id):
+    mngr = await cg.get_variable(config[CONF_EMNGR_ID])
+
+    var = cg.new_Pvariable(effect_id, config[CONF_NAME])
+    cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
     cg.add(var.set_manager(mngr))
     return var
 

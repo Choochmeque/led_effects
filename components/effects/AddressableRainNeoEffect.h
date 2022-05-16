@@ -150,15 +150,15 @@ public:
                 } else {
                     memset(noise, 0, this->manager_->width() * this->cloud_height_ * sizeof(*noise));
                 }
-                int xoffset = noiseScale * x + hue;
+                int xoffset = noiseScale * x + this->hue_;
 
                 for(uint8_t z = 0; z < this->cloud_height_; z++) {
-                    int yoffset = noiseScale * z - hue;
+                    int yoffset = noiseScale * z - this->hue_;
                     uint8_t dataSmoothing = 192;
-                    uint8_t noiseData = qsub8(inoise8(noiseX + xoffset,noiseY + yoffset,noiseZ),16);
+                    uint8_t noiseData = qsub8(inoise8(noiseX + xoffset, noiseY + yoffset, noiseZ), 16);
                     noiseData = qadd8(noiseData, scale8(noiseData,39));
                     noise[x * this->cloud_height_ + z] = scale8(noise[x * this->cloud_height_ + z], dataSmoothing) + scale8(noiseData, 256 - dataSmoothing);
-                    myMatrix->blendPixelXY(x, mySettings->matrixSettings.height - z - 1, ColorFromPalette(rainClouds_p, noise[x * this->cloud_height_ + z]), (this->cloud_height_ - z) * (250 / this->cloud_height_));
+                    myMatrix->blendPixelXY(x, this->manager_->height() - z - 1, ColorFromPalette(rainClouds_p, noise[x * this->cloud_height_ + z]), (this->cloud_height_ - z) * (250 / this->cloud_height_));
                 }
                 noiseZ ++;
             }

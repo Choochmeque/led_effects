@@ -143,7 +143,7 @@ public:
             }
 
             // Step 6. Add clouds if called for
-            if (clouds) {
+            if (this->clouds_) {
                 if (!noise) {
                     Serial.println("noise malloc failed");
                     return;

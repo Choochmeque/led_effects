@@ -337,6 +337,48 @@ const TProgmemRGBPalette16 *colorPallettes[] = {
     &RainbowColors_p,
     &RainbowStripeColors_p
 };
+
+const CRGBPalette16 WoodFireColors_p = {
+    HTMLColorCode::Black, HTMLColorCode::OrangeRed, HTMLColorCode::Orange, HTMLColorCode::Gold
+};
+const CRGBPalette16 NormalFire_p = {
+    HTMLColorCode::Black, HTMLColorCode::Red, 0xff3c00, 0xff7800
+};
+const CRGBPalette16 NormalFire2_p = {
+    HTMLColorCode::Black, HTMLColorCode::FireBrick, 0xff3c00, 0xff7800
+};
+const CRGBPalette16 SodiumFireColors_p = {
+    HTMLColorCode::Black, HTMLColorCode::Orange, HTMLColorCode::Gold, HTMLColorCode::Goldenrod
+};
+const CRGBPalette16 CopperFireColors_p = {
+    HTMLColorCode::Black, HTMLColorCode::Green, HTMLColorCode::GreenYellow, HTMLColorCode::LimeGreen
+};
+const CRGBPalette16 AlcoholFireColors_p = {
+    HTMLColorCode::Black, HTMLColorCode::Blue, HTMLColorCode::DeepSkyBlue, HTMLColorCode::LightSkyBlue
+};
+const CRGBPalette16 RubidiumFireColors_p = {
+    HTMLColorCode::Black, HTMLColorCode::Indigo, HTMLColorCode::Indigo, HTMLColorCode::DarkBlue
+};
+const CRGBPalette16 PotassiumFireColors_p = {
+    CRGHTMLColorCodeB::Indigo, HTMLColorCode::MediumPurple, HTMLColorCode::DeepPink
+};
+const CRGBPalette16 LithiumFireColors_p = {
+    HTMLColorCode::Black, HTMLColorCode::FireBrick, HTMLColorCode::Pink, HTMLColorCode::DeepPink
+};
+const CRGBPalette16 HeatColors_x = HeatColors_p;
+const CRGBPalette16 *firePalettes[] = {
+  &HeatColors_x,
+  &WoodFireColors_p,
+  &NormalFire_p,
+  &NormalFire2_p,
+  &LithiumFireColors_p,
+  &SodiumFireColors_p,
+  &CopperFireColors_p,
+  &AlcoholFireColors_p,
+  &RubidiumFireColors_p,
+  &PotassiumFireColors_p
+};
+
 class AddressableAbstractEffect : public light::AddressableLightEffect 
 {
 public:
@@ -459,6 +501,11 @@ protected:
     const TProgmemRGBPalette16 *GetColorPalette(uint8_t pct)
     {
         return colorPallettes[(uint8_t)(pct / 100.0f * ((sizeof(colorPallettes) / sizeof(TProgmemRGBPalette16 *)) - 0.01f))];
+    }
+
+    const CRGBPalette16 *GetFirePalette(uint8_t pct)
+    {
+        return firePalettes[(uint8_t)(pct / 100.0f * ((sizeof(firePalettes) / sizeof(CRGBPalette16 *)) - 0.01f))];
     }
 
     void applyBlur2d(light::AddressableLight &it, uint8_t amount)

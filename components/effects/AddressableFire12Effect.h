@@ -18,7 +18,7 @@ public:
 
         this->noise3d_.resize(this->manager_->width());
         for (uint8_t i = 0; i < this->manager_->width(); ++i) {
-            noise3d[i].resize(this->manager_->height());
+            this->noise3d_[i].resize(this->manager_->height());
         }
     }
 
@@ -36,11 +36,11 @@ public:
             // Step 1.  Cool down every cell a little
             for (int i = 0; i < this->manager_->height(); i++) {
                 this->noise3d_[x][i] = qsub8(this->noise3d_[x][i],
-                                    random(0, ((cooling * 10) / this->manager_->height()) + 2));
+                                    random(0, ((this->cooling_ * 10) / this->manager_->height()) + 2));
             }
             // Step 2.  Heat from each cell drifts 'up' and diffuses a little
             for (int k = this->manager_->height(); k > 1; k--) {
-                this->noise3d_[x][myMatrix->wrapY(k)] = (this->noise3d_[x][k - 1] + this->noise3d_[x][wrapY(k - 2)] + this->noise3d_[x][wrapY(k - 2)]) / 3;
+                this->noise3d_[x][wrapY(k)] = (this->noise3d_[x][k - 1] + this->noise3d_[x][wrapY(k - 2)] + this->noise3d_[x][wrapY(k - 2)]) / 3;
             }
             // Step 3.  Randomly ignite new 'sparks' of heat near the bottom
             if (random8() < this->sparking_) {

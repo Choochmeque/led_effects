@@ -1,6 +1,4 @@
-#include <string.h>
-
-#include "math8.h"
+#include "lib8tion.h"
 
 #define P(x) pgm_read_byte_near(p + x)
 

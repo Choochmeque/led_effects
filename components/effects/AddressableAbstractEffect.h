@@ -342,28 +342,28 @@ const CRGBPalette16 WoodFireColors_p = {
     Color(HTMLColorCode::Black), Color(HTMLColorCode::OrangeRed), Color(HTMLColorCode::Orange), Color(HTMLColorCode::Gold)
 };
 const CRGBPalette16 NormalFire_p = {
-    HTMLColorCode::Black, HTMLColorCode::Red, 0xff3c00, 0xff7800
+    Color(HTMLColorCode::Black), Color(HTMLColorCode::Red), Color(0xff3c00), Color(0xff7800)
 };
 const CRGBPalette16 NormalFire2_p = {
-    HTMLColorCode::Black, HTMLColorCode::FireBrick, 0xff3c00, 0xff7800
+    Color(HTMLColorCode::Black), Color(HTMLColorCode::FireBrick), Color(0xff3c00), Color(0xff7800)
 };
 const CRGBPalette16 SodiumFireColors_p = {
-    HTMLColorCode::Black, HTMLColorCode::Orange, HTMLColorCode::Gold, HTMLColorCode::Goldenrod
+    Color(HTMLColorCode::Black), Color(HTMLColorCode::Orange), Color(HTMLColorCode::Gold), Color(HTMLColorCode::Goldenrod)
 };
 const CRGBPalette16 CopperFireColors_p = {
-    HTMLColorCode::Black, HTMLColorCode::Green, HTMLColorCode::GreenYellow, HTMLColorCode::LimeGreen
+    Color(HTMLColorCode::Black), Color(HTMLColorCode::Green), Color(HTMLColorCode::GreenYellow), Color(HTMLColorCode::LimeGreen)
 };
 const CRGBPalette16 AlcoholFireColors_p = {
-    HTMLColorCode::Black, HTMLColorCode::Blue, HTMLColorCode::DeepSkyBlue, HTMLColorCode::LightSkyBlue
+    Color(HTMLColorCode::Black), Color(HTMLColorCode::Blue), Color(HTMLColorCode::DeepSkyBlue), Color(HTMLColorCode::LightSkyBlue)
 };
 const CRGBPalette16 RubidiumFireColors_p = {
-    HTMLColorCode::Black, HTMLColorCode::Indigo, HTMLColorCode::Indigo, HTMLColorCode::DarkBlue
+    Color(HTMLColorCode::Black), Color(HTMLColorCode::Indigo), Color(HTMLColorCode::Indigo), Color(HTMLColorCode::DarkBlue)
 };
 const CRGBPalette16 PotassiumFireColors_p = {
-    HTMLColorCode::Indigo, HTMLColorCode::MediumPurple, HTMLColorCode::DeepPink
+    Color(HTMLColorCode::Indigo), Color(HTMLColorCode::MediumPurple), Color(HTMLColorCode::DeepPink)
 };
 const CRGBPalette16 LithiumFireColors_p = {
-    HTMLColorCode::Black, HTMLColorCode::FireBrick, HTMLColorCode::Pink, HTMLColorCode::DeepPink
+    Color(HTMLColorCode::Black), Color(HTMLColorCode::FireBrick), Color(HTMLColorCode::Pink), Color(HTMLColorCode::DeepPink)
 };
 const CRGBPalette16 HeatColors_x = HeatColors_p;
 const CRGBPalette16 *firePalettes[] = {

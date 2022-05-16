@@ -117,6 +117,12 @@ public:
         return *this;
     }
 
+    CRGBPalette16( const TProgmemRGBPalette16& rhs)
+    {
+        for( uint8_t i = 0; i < 16; ++i) {
+            entries[i] =  pgm_read_dword_near( rhs + i);
+        }
+    }
     CRGBPalette16& operator=( const TProgmemRGBPalette16& rhs)
     {
         for( uint8_t i = 0; i < 16; ++i) {

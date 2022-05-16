@@ -13,6 +13,8 @@ public:
 
     void start() override
     {
+        this->rainClouds_p = CRGBPalette16(Color::BLACK, Color(15, 24, 24), Color(9, 15, 15), Color::BLACK);
+
         this->temp_matrix_.resize(this->manager_->width());
         for (uint8_t i = 0; i < this->manager_->width(); ++i) {
             this->temp_matrix_[i].resize(this->manager_->height());
@@ -170,7 +172,7 @@ protected:
     uint16_t noiseX = random16();
     uint16_t noiseY = random16();
     uint16_t noiseZ = random16();
-    CRGBPalette16 rainClouds_p(Color::BLACK, Color(15, 24, 24), Color(9, 15, 15), Color::BLACK);
+    CRGBPalette16 rainClouds_p;
 
     uint8_t hue_{0};
 

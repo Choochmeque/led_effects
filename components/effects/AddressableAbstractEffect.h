@@ -537,6 +537,13 @@ protected:
         return mod8(y + this->manager_->height(), this->manager_->height());
     }
 
+    void MyMatrix::fadeToBlackBy(it, uint8_t step)
+    {
+        for (uint16_t i = 0; i < this->manager_->num_leds(); i++) {
+            it[i].fadeToBlackBy(step);
+        }
+    }
+
     uint8_t MATRIX_TYPE{0};
 };
 

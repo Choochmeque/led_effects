@@ -41,7 +41,7 @@ public:
     {
         CRGBPalette16 rain_p(Color::BLACK, Color(rainColor));
 
-        myMatrix->fadeToBlackBy(255 - tailLength);
+        fadeToBlackBy(it, 255 - tailLength);
 
         if (!lightning && storm) {
             lightning = new uint8_t[this->manager_->num_leds()];

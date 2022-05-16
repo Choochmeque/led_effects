@@ -325,7 +325,16 @@ async def addressable_rain_effect_to_code(config, effect_id):
         ): cv.positive_time_period_milliseconds,
         cv.Optional(
             CONF_SCALE, default="20"
-        ): cv.int_range(0, 255),        
+        ): cv.int_range(0, 255),
+        cv.Optional(
+            "splashes", default=False
+        ): cv.boolean,
+        cv.Optional(
+            "clouds", default=False
+        ): cv.boolean,
+        cv.Optional(
+            "storm", default=False
+        ): cv.boolean,
     },
 )
 async def addressable_rain_neo_effect_to_code(config, effect_id):
@@ -334,6 +343,9 @@ async def addressable_rain_neo_effect_to_code(config, effect_id):
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
     cg.add(var.set_scale(config[CONF_SCALE]))
+    cg.add(var.set_splashes(config["splashes"]))
+    cg.add(var.set_clouds(config["clouds"]))
+    cg.add(var.set_storm(config["storm"]))
     cg.add(var.set_manager(mngr))
     return var
 

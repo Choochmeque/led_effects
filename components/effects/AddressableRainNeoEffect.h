@@ -165,6 +165,12 @@ public:
         }
     }
 
+    void set_splashes(bool splashes) { this->splashes_ = splashes; }
+
+    void set_clouds(bool clouds) { this->clouds_ = clouds; }
+
+    void set_storm(bool storm) { this->storm_ = storm; }
+
 protected:
     std::vector<std::vector<uint8_t> > temp_matrix_;
     std::vector<uint8_t> splash_array_;
@@ -190,9 +196,9 @@ protected:
     uint8_t maxBrightness = 200;
     uint8_t spawnFreq = 50;
     uint8_t tailLength = 30;
-    bool splashes = false;
-    bool clouds = false;
-    bool storm = false;
+    bool splashes_{false};
+    bool clouds_{false};
+    bool storm_{false};
 };
 
 }  // namespace effects

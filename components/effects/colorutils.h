@@ -20,6 +20,10 @@ void fill_gradient_RGB(esphome::Color *leds, uint16_t numLeds, const esphome::Co
 void fill_gradient_RGB(esphome::Color *leds, uint16_t numLeds, const esphome::Color &c1, const esphome::Color &c2, const esphome::Color &c3);
 void fill_gradient_RGB(esphome::Color *leds, uint16_t numLeds, const esphome::Color &c1, const esphome::Color &c2, const esphome::Color &c3, const esphome::Color &c4);
 
+// nblend - destructively modifies one color, blending
+//          in a given fraction of an overlay color
+esphome::Color& nblend( esphome::Color& existing, const esphome::Color& overlay, fract8 amountOfOverlay );
+
 // Palettes
 //
 // RGB Palettes map an 8-bit value (0..255) to an RGB color.

@@ -69,6 +69,25 @@ void fill_gradient_RGB(esphome::Color *leds, uint16_t numLeds, const esphome::Co
     fill_gradient_RGB(leds, twothirds, c3,      last, c4);
 }
 
+esphome::Color& nblend(esphome::Color& existing, const esphome::Color& overlay, fract8 amountOfOverlay )
+{
+    if( amountOfOverlay == 0) {
+        return existing;
+    }
+
+    if( amountOfOverlay == 255) {
+        existing = overlay;
+        return existing;
+    }
+
+    // Corrected blend method, with no loss-of-precision rounding errors
+    existing.red   = blend8( existing.red,   overlay.red,   amountOfOverlay);
+    existing.green = blend8( existing.green, overlay.green, amountOfOverlay);
+    existing.blue  = blend8( existing.blue,  overlay.blue,  amountOfOverlay);
+
+    return existing;
+}
+
 // lsrX4: helper function to divide a number by 16, aka four LSR's.
 // On avr-gcc, "u8 >> 4" generates a loop, which is big, and slow.
 // merely forcing it to be four /=2's causes avr-gcc to emit

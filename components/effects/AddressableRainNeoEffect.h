@@ -43,16 +43,16 @@ public:
 
         fadeToBlackBy(it, 255 - tailLength);
 
-        if (!lightning && storm) {
+        if (!lightning && this->storm_) {
             lightning = new uint8_t[this->manager_->num_leds()];
-        } else if (lightning && !storm) {
+        } else if (lightning && !this->storm_) {
             delete[] lightning;
             lightning = nullptr;
         }
 
-        if (!noise && clouds) {
+        if (!noise && this->clouds_) {
             noise = new uint8_t[this->manager_->width() * this->cloud_height_];
-        } else if (noise && !clouds) {
+        } else if (noise && !this->clouds_) {
             delete[] noise;
             noise = nullptr;
         }
@@ -82,7 +82,7 @@ public:
             }
 
             // Step 4. Add splash if called for
-            if (splashes) {
+            if (this->splashes_) {
                 // FIXME, this is broken
                 uint8_t j = this->splash_array_[x];
                 uint8_t v = this->temp_matrix_[x][0];
@@ -101,7 +101,7 @@ public:
             }
 
             // Step 5. Add lightning if called for
-            if (storm) {
+            if (this->storm_) {
                 if (!lightning) {
                     Serial.println("lightning malloc failed");
                     return;

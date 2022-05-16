@@ -6,6 +6,16 @@
 
 #include "lib8tion.h"
 
+// fill_gradient_RGB - fill a range of LEDs with a smooth RGB gradient
+//                     between two specified RGB colors.
+//                     Unlike HSV, there is no 'color wheel' in RGB space,
+//                     and therefore there's only one 'direction' for the
+//                     gradient to go, and no 'direction code' is needed.
+void fill_gradient_RGB(esphome::Color *leds,
+                       uint16_t startpos, esphome::Color startcolor,
+                       uint16_t endpos,   esphome::Color endcolor);
+void fill_gradient_RGB(esphome::Color *leds, uint16_t numLeds, const esphome::Color &c1, const esphome::Color &c2);
+
 // Palettes
 //
 // RGB Palettes map an 8-bit value (0..255) to an RGB color.
@@ -75,9 +85,20 @@ typedef uint32_t TProgmemRGBPalette32[32];
 typedef uint32_t TProgmemHSVPalette32[32];
 #define TProgmemPalette32 TProgmemRGBPalette32
 
+class CRGBPalette16 {
+public:
+    esphome::Color entries[16];
+    CRGBPalette16() {};
+
+    CRGBPalette16(const esphome::Color &c1, const esphome::Color &c2)
+    {
+        fill_gradient_RGB(&(entries[0]), 16, c1, c2);
+    }
+};
+
 typedef enum { NOBLEND=0, LINEARBLEND=1 } TBlendType;
 
-esphome::Color ColorFromPalette( const TProgmemRGBPalette16& pal,
+esphome::Color ColorFromPalette(const TProgmemRGBPalette16& pal,
                        uint8_t index,
                        uint8_t brightness=255,
                        TBlendType blendType=LINEARBLEND);

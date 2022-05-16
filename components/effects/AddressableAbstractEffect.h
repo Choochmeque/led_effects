@@ -7,6 +7,7 @@
 #include "EffectsManager.h"
 
 #include "colorutils.h"
+#include "noise.h"
 
 namespace esphome {
 namespace effects {
@@ -540,7 +541,7 @@ protected:
     void fadeToBlackBy(light::AddressableLight &it, uint8_t step)
     {
         for (uint16_t i = 0; i < this->manager_->num_leds(); i++) {
-            it[i].fadeToBlackBy(step);
+            it[i].fade_to_black(step);
         }
     }
 

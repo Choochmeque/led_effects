@@ -30,12 +30,12 @@ public:
 
         this->last_run_ = now;
 
-        rain();
+        rain(it);
 
         it.schedule_show();
     }
 
-    void rain()
+    void rain(light::AddressableLight &it)
     {
         CRGBPalette16 rain_p(Color::BLACK, Color(rainColor));
 

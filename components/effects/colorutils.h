@@ -6,6 +6,8 @@
 
 #include "lib8tion.h"
 
+#define saccum87 int16_t
+
 // fill_gradient_RGB - fill a range of LEDs with a smooth RGB gradient
 //                     between two specified RGB colors.
 //                     Unlike HSV, there is no 'color wheel' in RGB space,

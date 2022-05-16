@@ -17,6 +17,7 @@ void fill_gradient_RGB(esphome::Color *leds,
                        uint16_t startpos, esphome::Color startcolor,
                        uint16_t endpos,   esphome::Color endcolor);
 void fill_gradient_RGB(esphome::Color *leds, uint16_t numLeds, const esphome::Color &c1, const esphome::Color &c2);
+void fill_gradient_RGB(esphome::Color *leds, uint16_t numLeds, const esphome::Color &c1, const esphome::Color &c2, const esphome::Color &c3);
 
 // Palettes
 //
@@ -95,6 +96,10 @@ public:
     CRGBPalette16(const esphome::Color &c1, const esphome::Color &c2)
     {
         fill_gradient_RGB(&(entries[0]), 16, c1, c2);
+    }
+    CRGBPalette16(const esphome::Color &c1, const esphome::Color &c2, const esphome::Color &c3)
+    {
+        fill_gradient_RGB(&(entries[0]), 16, c1, c2, c3);
     }
 };
 

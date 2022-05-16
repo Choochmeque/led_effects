@@ -51,6 +51,13 @@ void fill_gradient_RGB(esphome::Color *leds, uint16_t numLeds, const esphome::Co
     fill_gradient_RGB(leds, 0, c1, last, c2);
 }
 
+void fill_gradient_RGB(esphome::Color *leds, uint16_t numLeds, const esphome::Color &c1, const esphome::Color &c2, const esphome::Color &c3)
+{
+    uint16_t half = (numLeds / 2);
+    uint16_t last = numLeds - 1;
+    fill_gradient_RGB(leds,    0, c1, half, c2);
+    fill_gradient_RGB(leds, half, c2, last, c3);
+}
 
 // lsrX4: helper function to divide a number by 16, aka four LSR's.
 // On avr-gcc, "u8 >> 4" generates a loop, which is big, and slow.

@@ -64,7 +64,7 @@ public:
                     }
                 } 
                 else {
-                    if (settings.scale == 100) {
+                    if (this->scale_ == 100) {
                         it[getPixelNumber(x, y)] = light::ESPHSVColor(0, 255, 255);
                     } 
                     else {

@@ -73,7 +73,7 @@ public:
 
         //copy everything one line up
         for (uint8_t y = 0; y < this->manager_->height() - 1; y++) {
-            memcpy(this->fire18heat[y], this->fire18heat[y + 1], sizeof(uint8_t) * this->manager_->width());
+            memcpy(&this->fire18heat[y], &this->fire18heat[y + 1], sizeof(uint8_t) * this->manager_->width());
         }
 
         //dim
@@ -93,7 +93,7 @@ public:
                 it[getPixelNumber(x, this->manager_->height() - 1 - y)] =
                                     Color(this->fire18heat[y][x],
                                         (float)this->fire18heat[y][x] * this->scale_ * 0.01f,
-                                        0));
+                                        0);
 
                 // dim the result based on 2nd noise layer
                 dimPixelXY(it, x,

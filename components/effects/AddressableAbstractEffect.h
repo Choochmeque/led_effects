@@ -479,6 +479,11 @@ protected:
             uint32_t{color.blue};
     }
 
+    void dimPixelXY(light::AddressableLight &it, uint8_t x, uint8_t y, uint8_t value)
+    {
+        it[getPixelNumber(x, y)].nscale8(value);
+    }
+
     void dimAll(light::AddressableLight &it, uint8_t value)
     {
         for (uint16_t i = 0; i < this->manager_->num_leds(); i++) {

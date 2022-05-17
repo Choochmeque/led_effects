@@ -590,7 +590,7 @@ protected:
         return mod8(y + this->manager_->height(), this->manager_->height());
     }
 
-    void MyMatrix::fadeToBlackBy(light::AddressableLight &it, uint16_t index, uint8_t step)
+    void fadeToBlackBy(light::AddressableLight &it, uint16_t index, uint8_t step)
     {
         it[index].fade_to_black(step);
     }

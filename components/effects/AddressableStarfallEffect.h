@@ -65,23 +65,6 @@ public:
 protected:
     uint8_t saturation_{150};
     uint8_t tail_step_{100};
-
-    void fadePixel(light::AddressableLight &it, uint8_t x, uint8_t y, uint8_t step)
-    {
-        const uint16_t pixelNum = getPixelNumber(x, y);
-        Color color = it[pixelNum].get();
-
-        if (isEqualColors(color, Color::BLACK)) {
-            return;
-        }
-
-        if (color.red >= 30 || color.green >= 30 || color.blue >= 30) {
-            it[pixelNum] = color.fade_to_black(step);
-        }
-        else {
-            it[pixelNum] = Color::BLACK;
-        }
-    }
 };
 
 }  // namespace effects

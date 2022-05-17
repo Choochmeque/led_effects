@@ -602,6 +602,25 @@ protected:
         }
     }
 
+    void fader(light::AddressableLight &it, uint8_t step)
+    {
+        for (uint16_t i = 0; i < this->manager_->num_leds(); i++) {
+            fadePixel(it, i, step);
+        }
+    }
+
+    void fadePixel(light::AddressableLight &it, uint16_t i, uint8_t step)
+    {
+        if (it[i].r >= 30 ||
+                it[i].g >= 30 ||
+                it[i].b >= 30) {
+            fadeToBlackBy(it, i, step);
+        } 
+        else {
+            it[i] = Color::BLACK;
+        }
+    }
+
     void fadePixelXY(light::AddressableLight &it, uint8_t x, uint8_t y, uint8_t step)
     {
         const uint16_t pixelNum = getPixelNumber(x, y);
@@ -627,6 +646,11 @@ protected:
     uint8_t getCenterY()
     {
         return this->manager_->height() / 2 - 1;
+    }
+
+    void clear(light::AddressableLight &it)
+    {
+        it.all() = Color::BLACK;
     }
 
     uint8_t MATRIX_TYPE{0};

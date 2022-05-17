@@ -69,6 +69,9 @@ AddressableStarfallEffect = effects_ns.class_(
 AddressableStormEffect = effects_ns.class_(
     "AddressableStormEffect", AddressableLightEffect
 )
+AddressableTrackingLightersEffect = effects_ns.class_(
+    "AddressableTrackingLightersEffect", AddressableLightEffect
+)
 AddressableTwinklesEffect = effects_ns.class_(
     "AddressableTwinklesEffect", AddressableLightEffect
 )
@@ -584,6 +587,29 @@ async def addressable_storm_effect_to_code(config, effect_id):
     return var
 
 @register_addressable_effect(
+    "addressable_tracking_lighters",
+    AddressableTrackingLightersEffect,
+    "Tracking Lighters",
+    {
+        cv.GenerateID(CONF_EMNGR_ID): cv.use_id(EffectsManagerComponent),
+        cv.Optional(
+            CONF_UPDATE_INTERVAL, default="100ms"
+        ): cv.positive_time_period_milliseconds,
+        cv.Optional(
+            CONF_SCALE, default="20"
+        ): cv.int_range(0, 255),
+    },
+)
+async def addressable_tracking_lighters_effect_to_code(config, effect_id):
+    mngr = await cg.get_variable(config[CONF_EMNGR_ID])
+
+    var = cg.new_Pvariable(effect_id, config[CONF_NAME])
+    cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    cg.add(var.set_scale(config[CONF_SCALE]))
+    cg.add(var.set_manager(mngr))
+    return var
+
+@register_addressable_effect(
     "addressable_twinkles",
     AddressableTwinklesEffect,
     "Twinkles",
@@ -597,7 +623,7 @@ async def addressable_storm_effect_to_code(config, effect_id):
         ): cv.int_range(0, 255),
     },
 )
-async def addressable_waterfall_effect_to_code(config, effect_id):
+async def addressable_twinkles_effect_to_code(config, effect_id):
     mngr = await cg.get_variable(config[CONF_EMNGR_ID])
 
     var = cg.new_Pvariable(effect_id, config[CONF_NAME])

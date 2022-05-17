@@ -73,7 +73,7 @@ public:
 
         //copy everything one line up
         for (uint8_t y = 0; y < this->manager_->height() - 1; y++) {
-            memcpy(&this->fire18heat[y], &this->fire18heat[y + 1], sizeof(uint8_t) * this->manager_->width());
+            this->fire18heat[y] = this->fire18heat[y + 1];
         }
 
         //dim

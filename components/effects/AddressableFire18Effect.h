@@ -23,7 +23,7 @@ public:
         for (uint8_t i = 0; i < this->num_layers_; ++i) {
             this->noise3d[i].resize(this->manager_->width());
             for (uint8_t j = 0; j < this->manager_->width(); ++j) {
-                this->noise3d[i][j].reszie(this->manager_->height());
+                this->noise3d[i][j].resize(this->manager_->height());
             }
         }
 
@@ -55,9 +55,9 @@ public:
             this->effect_scale_y_[z] = ctrl2 / 2;
 
             for (uint8_t i = 0; i < this->manager_->width(); i++) {
-                uint32_t ioffset = this->effect_scale_x_[z] * (i - myMatrix->getCenterX());
+                uint32_t ioffset = this->effect_scale_x_[z] * (i - getCenterX());
                 for (uint8_t j = 0; j < this->manager_->height(); j++) {
-                    uint32_t joffset = this->effect_scale_y_[z] * (j - myMatrix->getCenterY());
+                    uint32_t joffset = this->effect_scale_y_[z] * (j - getCenterY());
                     uint16_t data = ((inoise16(this->effect_x_[z] + ioffset, this->effect_y_[z] + joffset, this->effect_z_[z])) + 1);
                     this->noise3d[z][i][j] = data >> 8;
                 }
@@ -67,7 +67,7 @@ public:
         // draw lowest line - seed the fire
         for (uint8_t x = 0; x < this->manager_->width(); x++) {
             fire18heat[this->manager_->height() - 1][x] =
-                    this->noise3d[0][this->manager_->width() - 1 - x][myMatrix->getCenterY() - 1];
+                    this->noise3d[0][this->manager_->width() - 1 - x][getCenterY() - 1];
         }
 
 

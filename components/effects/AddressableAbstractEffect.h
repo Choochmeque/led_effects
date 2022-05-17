@@ -481,7 +481,7 @@ protected:
 
     void dimPixelXY(light::AddressableLight &it, uint8_t x, uint8_t y, uint8_t value)
     {
-        it[getPixelNumber(x, y)].nscale8(value);
+        it[getPixelNumber(x, y)] = nscale8(it[getPixelNumber(x, y)].get(), value);
     }
 
     void dimAll(light::AddressableLight &it, uint8_t value)
@@ -595,6 +595,16 @@ protected:
         for (uint16_t i = 0; i < this->manager_->num_leds(); i++) {
             it[i].fade_to_black(step);
         }
+    }
+
+    uint8_t getCenterX()
+    {
+        return this->manager_->width() / 2 - 1;
+    }
+
+    uint8_t getCenterY()
+    {
+        return this->manager_->height() / 2 - 1;
     }
 
     uint8_t MATRIX_TYPE{0};

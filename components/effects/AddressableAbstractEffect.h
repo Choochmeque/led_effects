@@ -611,9 +611,9 @@ protected:
 
     void fadePixel(light::AddressableLight &it, uint16_t i, uint8_t step)
     {
-        if (it[i].r >= 30 ||
-                it[i].g >= 30 ||
-                it[i].b >= 30) {
+        if (it[i].get_red() >= 30 ||
+                it[i].get_green() >= 30 ||
+                it[i].get_blue() >= 30) {
             fadeToBlackBy(it, i, step);
         } 
         else {

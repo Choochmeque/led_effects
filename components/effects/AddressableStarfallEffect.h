@@ -49,10 +49,10 @@ public:
 
         // уменьшаем яркость левой и верхней линии, формируем "хвосты"
         for (uint8_t i = this->manager_->height() / 2; i < this->manager_->height(); i++) {
-            fadePixel(it, 0, i, this->tail_step_);
+            fadePixelXY(it, 0, i, this->tail_step_);
         }
         for (uint8_t i = 0; i < this->manager_->width() / 2; i++) {
-            fadePixel(it, i, this->manager_->height() - 1, this->tail_step_);
+            fadePixelXY(it, i, this->manager_->height() - 1, this->tail_step_);
         }
 
         it.schedule_show();

@@ -597,6 +597,23 @@ protected:
         }
     }
 
+    void fadePixelXY(light::AddressableLight &it, uint8_t x, uint8_t y, uint8_t step)
+    {
+        const uint16_t pixelNum = getPixelNumber(x, y);
+        const Color color = it[pixelNum].get();
+
+        if (isEqualColors(color, Color::BLACK)) {
+            return;
+        }
+
+        if (color.r >= 30 || color.g >= 30 || color.b >= 30) {
+            fadeToBlackBy(it, pixelNum, step);
+        } 
+        else {
+            it[pixelNum] = Color::Black;
+        }
+    }
+
     uint8_t getCenterX()
     {
         return this->manager_->width() / 2 - 1;

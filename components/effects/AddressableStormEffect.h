@@ -29,9 +29,9 @@ public:
 
         for (int8_t x = 0; x < this->manager_->width() - 1; x++) {
             if (!random8(this->snow_density_) &&
-                    isColorEqual(it[getPixelNumber(wrapX(x), this->manager_->height() - 1)].get(), Color::BLACK) &&
-                    isColorEqual(it[getPixelNumber(wrapX(x + 1), this->manager_->height() - 1)].get(), Color::BLACK) &&
-                    isColorEqual(it[getPixelNumber(wrapX(x - 1), this->manager_->height() - 1)].get(), Color::BLACK)) {
+                    isEqualColors(it[getPixelNumber(wrapX(x), this->manager_->height() - 1)].get(), Color::BLACK) &&
+                    isEqualColors(it[getPixelNumber(wrapX(x + 1), this->manager_->height() - 1)].get(), Color::BLACK) &&
+                    isEqualColors(it[getPixelNumber(wrapX(x - 1), this->manager_->height() - 1)].get(), Color::BLACK)) {
                 it[getPixelNumber(x, this->manager_->height() - 1)] = light::ESPHSVColor(random8(), this->saturation_, random8(64, 255));
             }
         }

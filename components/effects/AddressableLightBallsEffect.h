@@ -20,8 +20,8 @@ public:
 
         this->last_run_ = now;
 
-        this->paint_width_ = mySettings->matrixSettings.width - this->thickness_ * 2;
-        this->paint_height_ = mySettings->matrixSettings.height - this->thickness_ * 2;
+        this->paint_width_ = this->manager_->width() - this->thickness_ * 2;
+        this->paint_height_ = this->manager_->height() - this->thickness_ * 2;
 
         // Apply some blurring to whatever's already on the matrix
         // Note that we never actually clear the matrix, we just constantly
@@ -37,7 +37,7 @@ public:
         const uint16_t m = beatsin16( 97, 0, 255); //123
 
         // The color of each point shifts over time, each at a different speed.
-        const uint32_t ms = millis() / (settings.scale / 4 + 1);
+        const uint32_t ms = millis() / (this->scale_ / 4 + 1);
         it[getPixelNumber(highByte(i * this->paint_width_) + this->thickness_,
                             highByte(j * this->paint_height_) + this->thickness_)] = light::ESPHSVColor(ms / 29, 200, 255);
         it[getPixelNumber(highByte(j * this->paint_width_) + this->thickness_,

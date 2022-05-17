@@ -75,6 +75,38 @@ static int16_t inline __attribute__((always_inline))  avg15_inline_avr_mul( int1
 #define LERP(a,b,u) lerp15by16(a,b,u)
 #endif
 
+static int16_t inline __attribute__((always_inline))  grad16(uint8_t hash, int16_t x, int16_t y, int16_t z) {
+    hash = hash&15;
+    int16_t u = hash<8?x:y;
+    int16_t v = hash<4?y:hash==12||hash==14?x:z;
+    if(hash&1) { u = -u; }
+    if(hash&2) { v = -v; }
+
+    return AVG15(u,v);
+}
+
+static int16_t inline __attribute__((always_inline)) grad16(uint8_t hash, int16_t x, int16_t y) {
+    hash = hash & 7;
+    int16_t u,v;
+    if(hash < 4) { u = x; v = y; } else { u = y; v = x; }
+    if(hash&1) { u = -u; }
+    if(hash&2) { v = -v; }
+
+    return AVG15(u,v);
+}
+
+static int16_t inline __attribute__((always_inline)) grad16(uint8_t hash, int16_t x) {
+    hash = hash & 15;
+    int16_t u,v;
+    if(hash > 8) { u=x;v=x; }
+    else if(hash < 4) { u=x;v=1; }
+    else { u=1;v=x; }
+    if(hash&1) { u = -u; }
+    if(hash&2) { v = -v; }
+
+    return AVG15(u,v);
+}
+
 // selectBasedOnHashBit performs this:
 //   result = (hash & (1<<bitnumber)) ? a : b
 // but with an AVR asm version that's smaller and quicker than C

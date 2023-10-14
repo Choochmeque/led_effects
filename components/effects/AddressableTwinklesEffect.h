@@ -22,7 +22,7 @@ public:
                 this->ledsbuff_[idx].b = random8();
             } 
             else {
-                this->ledsbuff_[idx] = 0;
+                this->ledsbuff_[idx] = Color::BLACK;
             }
         }
     }
